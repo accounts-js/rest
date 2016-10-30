@@ -18,7 +18,7 @@ client.config({
 describe('client', () => {
   it('login', () => {
     nock(PATH)
-    .post('/login', {})
+    .post('/accounts/login', {})
     .reply(200, {
       state: 200,
       message: 'Mocked response',

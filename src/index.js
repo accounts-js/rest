@@ -1,23 +1,31 @@
+import { defaultsDeep } from 'lodash';
+
 const defaultConfig = {
   path: '',
+  prefix: 'accounts',
 };
 
 const client = {
-  _config: defaultConfig,
   fetch(route, args) {
-    return fetch(`${this._config.path}/${route}`, {
+    return fetch(`${this._config.path}/${this._config.prefix}/${route}`, {
       ...args,
     });
   },
-  login(args) {
+  login(body) {
     return this.fetch('login', {
       method: 'POST',
-      body: args,
+      body,
+    }).then(res => (res.json()));
+  },
+  signup(body) {
+    return this.fetch('signup', {
+      method: 'POST',
+      body,
     }).then(res => (res.json()));
   },
   config(config) {
-    // TODO Validation and merging.
-    this._config = config;
+    // TODO Validation
+    this._config = defaultsDeep({}, config, defaultConfig);
   },
 };
 

@@ -1,15 +1,15 @@
 import { defaultsDeep } from 'lodash';
+import { AccountsClient } from '@accounts/accounts';
 
 const defaultConfig = {
-  path: '',
-  prefix: 'accounts',
 };
 
 const client = {
   fetch(route, args) {
-    return fetch(`${this._config.path}/${this._config.prefix}/${route}`, {
+    return fetch(`${AccountsClient.options().server}${AccountsClient.options().path}/${route}`, {
+      mode: 'no-cors',
       ...args,
-    });
+    }).then(res => res.json());
   },
   login(body) {
     return this.fetch('login', {
@@ -17,11 +17,11 @@ const client = {
       body,
     }).then(res => (res.json()));
   },
-  signup(body) {
-    return this.fetch('signup', {
+  createUser(body) {
+    return this.fetch('createUser', {
       method: 'POST',
       body,
-    }).then(res => (res.json()));
+    });
   },
   config(config) {
     // TODO Validation

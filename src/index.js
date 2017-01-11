@@ -14,11 +14,14 @@ const client = {
       ...args,
     }).then(res => res.json());
   },
-  login(body) {
-    return this.fetch('login', {
+  loginWithPassword(user, password) {
+    return this.fetch('loginWithPassword', {
       method: 'POST',
-      body: JSON.stringify(body),
-    }).then(res => (res.json()));
+      body: JSON.stringify({
+        user,
+        password,
+      }),
+    });
   },
   createUser(body) {
     return this.fetch('createUser', {

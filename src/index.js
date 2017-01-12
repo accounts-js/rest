@@ -23,10 +23,10 @@ const client = {
       }),
     });
   },
-  createUser(body) {
+  createUser(user) {
     return this.fetch('createUser', {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify({ user }),
     });
   },
   config(config) {

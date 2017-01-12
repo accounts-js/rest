@@ -1,27 +1,33 @@
 import { defaultsDeep } from 'lodash';
+import { AccountsClient } from '@accounts/accounts';
 
 const defaultConfig = {
-  path: '',
-  prefix: 'accounts',
 };
+
+const headers = new Headers();
+headers.append('Content-Type', 'application/json');
 
 const client = {
   fetch(route, args) {
-    return fetch(`${this._config.path}/${this._config.prefix}/${route}`, {
+    return fetch(`${AccountsClient.options().server}${AccountsClient.options().path}/${route}`, {
+      headers,
       ...args,
+    }).then(res => res.json());
+  },
+  loginWithPassword(user, password) {
+    return this.fetch('loginWithPassword', {
+      method: 'POST',
+      body: JSON.stringify({
+        user,
+        password,
+      }),
     });
   },
-  login(body) {
-    return this.fetch('login', {
+  createUser(user) {
+    return this.fetch('createUser', {
       method: 'POST',
-      body,
-    }).then(res => (res.json()));
-  },
-  signup(body) {
-    return this.fetch('signup', {
-      method: 'POST',
-      body,
-    }).then(res => (res.json()));
+      body: JSON.stringify({ user }),
+    });
   },
   config(config) {
     // TODO Validation

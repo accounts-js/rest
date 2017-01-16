@@ -39,6 +39,15 @@ const client = {
       body: JSON.stringify({ user }),
     });
   },
+  refreshTokens(accessToken, refreshToken) {
+    return this.fetch('refreshTokens', {
+      method: 'POST',
+      body: JSON.stringify({
+        accessToken,
+        refreshToken,
+      }),
+    });
+  },
   config(config) {
     // TODO Validation
     this._config = defaultsDeep({}, config, defaultConfig);

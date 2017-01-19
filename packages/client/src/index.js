@@ -1,8 +1,4 @@
-import { defaultsDeep } from 'lodash';
-import { AccountsClient } from '@accounts/accounts';
-
-const defaultConfig = {
-};
+import AccountsClient from '@accounts/client';
 
 const headers = new Headers();
 headers.append('Content-Type', 'application/json');
@@ -55,10 +51,6 @@ const client = {
         accessToken,
       }),
     });
-  },
-  config(config) {
-    // TODO Validation
-    this._config = defaultsDeep({}, config, defaultConfig);
   },
 };
 

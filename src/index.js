@@ -48,6 +48,14 @@ const client = {
       }),
     });
   },
+  logout(accessToken) {
+    return this.fetch('logout', {
+      method: 'POST',
+      body: JSON.stringify({
+        accessToken,
+      }),
+    });
+  },
   config(config) {
     // TODO Validation
     this._config = defaultsDeep({}, config, defaultConfig);

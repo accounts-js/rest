@@ -1,6 +1,6 @@
 {
   "name": "@accounts/rest-express",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Server side REST express middleware for accounts",
   "main": "lib/index.js",
   "publishConfig": {

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "webpack -p --config --progress --watch",
-    "compile": "webpack -p --config --progress",
+    "compile": "babel ./src --out-dir ./lib",
     "flow:check": "flow check",
     "prepublish": "npm run compile",
     "pretest": "npm run lint",
@@ -62,7 +62,7 @@
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
-    "@accounts/common": "0.0.1",
+    "@accounts/common": "0.0.2",
     "cors": "^2.8.1",
     "express": "^4.14.0",
     "lodash": "^4.16.4",

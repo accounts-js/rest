@@ -1,6 +1,6 @@
 {
   "name": "@accounts/rest-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "REST client for accounts",
   "main": "lib/index.js",
   "publishConfig": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "webpack -p --config --progress --watch",
-    "compile": "webpack -p --config --progress",
+    "compile": "babel ./src --out-dir ./lib",
     "flow:check": "flow check",
     "prepublish": "npm run compile",
     "pretest": "npm run lint",
@@ -62,7 +62,7 @@
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
-    "@accounts/client": "0.0.1",
+    "@accounts/client": "0.0.2",
     "es6-promise": "^4.0.5",
     "lodash": "^4.16.4"
   }

@@ -4,7 +4,8 @@
     "start": "lerna exec -- npm start",
     "link": "lerna exec -- npm link",
     "compile": "lerna run compile",
-    "lint": "lerna run lint",
+    "flow:check": "flow check",
+    "lint": "eslint packages/*/src",
     "prebootstrap": "npm install",
     "postinstall": "lerna bootstrap",
     "pretest": "npm run compile",
@@ -20,6 +21,17 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "lerna": "2.0.0-beta.32"
+    "lerna": "2.0.0-beta.32",
+    "flow-bin": "^0.37.4",
+    "eslint": "^3.7.1",
+    "babel-eslint": "^7.0.0",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.3.0",
+    "eslint-plugin-jsdoc": "^2.4.0",
+    "eslint-plugin-require-jsdoc": "^1.0.4",
+    "eslint-plugin-flowtype": "^2.29.1"
   }
 }

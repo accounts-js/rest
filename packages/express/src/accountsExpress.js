@@ -13,6 +13,7 @@ const getUserAgent = (req) => {
 };
 
 const accountsExpress = (AccountsServer) => {
+  // eslint-disable-next-line new-cap
   const router = express.Router();
   const path = `${AccountsServer.options().path}/`;
 

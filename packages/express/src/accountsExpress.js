@@ -22,6 +22,22 @@ const accountsExpress = (AccountsServer) => {
   ? res.status(500).jsonp(err.serialize().message)
   : res.status(500).jsonp({ message: err.message }));
 
+  router.use(async (req, res, next) => {
+    const accessToken = pick(req.headers, 'accounts-access-token') || pick(req.body, 'accessToken');
+
+    if (accessToken) {
+      try {
+        const user = await AccountsServer.resumeSession(accessToken);
+      // AccountsServer.setUser(user);
+      // eslint-disable-next-line no-param-reassign
+        req.user = user;
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    next();
+  });
+
   router.post(`${path}loginWithPassword`, async (req, res) => {
     try {
       const { user, password } = req.body;

@@ -55,3 +55,26 @@ const client = {
 };
 
 export default client;
+
+const handleAuthFetchResults = (res) => {
+
+};
+
+export { handleAuthFetchResults };
+
+const authFetch = async (path, request) => {
+  // await AccountsClient.refreshSession();
+  console.log(AccountsClient.options());
+  const tokens = AccountsClient.tokens();
+  return fetch(new Request(path, {
+    ...{
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'accounts-access-token': tokens.accessToken,
+      }),
+    },
+    ...request,
+  }));
+};
+
+export { authFetch };

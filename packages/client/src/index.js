@@ -63,15 +63,17 @@ const handleAuthFetchResults = (res) => {
 export { handleAuthFetchResults };
 
 const authFetch = async (path, request) => {
-  // await AccountsClient.refreshSession();
-  console.log(AccountsClient.options());
+  await AccountsClient.resumeSession();
   const tokens = AccountsClient.tokens();
+  const headers = new Headers({ // eslint-disable-line no-shadow
+    'Content-Type': 'application/json',
+  });
+  if (tokens.accessToken) {
+    headers.append('accounts-access-token', tokens.accessToken);
+  }
   return fetch(new Request(path, {
     ...{
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        'accounts-access-token': tokens.accessToken,
-      }),
+      headers,
     },
     ...request,
   }));

@@ -1,5 +1,5 @@
 import express from 'express';
-import { pick } from 'lodash';
+import { get, isEmpty, pick } from 'lodash';
 import cors from 'cors';
 import { AccountsError } from '@accounts/common';
 import requestIp from 'request-ip';
@@ -23,16 +23,16 @@ const accountsExpress = (AccountsServer) => {
   : res.status(500).jsonp({ message: err.message }));
 
   router.use(async (req, res, next) => {
-    const accessToken = pick(req.headers, 'accounts-access-token') || pick(req.body, 'accessToken');
-
-    if (accessToken) {
+    const accessToken = get(req.headers, 'accounts-access-token', undefined) || get(req.body, 'accessToken', undefined);
+    if (!isEmpty(accessToken)) {
       try {
         const user = await AccountsServer.resumeSession(accessToken);
-      // AccountsServer.setUser(user);
-      // eslint-disable-next-line no-param-reassign
+        // eslint-disable-next-line no-param-reassign
+        AccountsServer.userId = () => user.id;
+        // eslint-disable-next-line no-param-reassign
         req.user = user;
       } catch (e) {
-        console.log(e);
+        console.log('Failed to resume session');
       }
     }
     next();

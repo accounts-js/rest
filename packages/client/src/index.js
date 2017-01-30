@@ -56,12 +56,6 @@ const client = {
 
 export default client;
 
-const handleAuthFetchResults = (res) => {
-
-};
-
-export { handleAuthFetchResults };
-
 const authFetch = async (path, request) => {
   await AccountsClient.resumeSession();
   const tokens = AccountsClient.tokens();

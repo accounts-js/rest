@@ -32,8 +32,13 @@ const accountsExpress = (AccountsServer) => {
         // eslint-disable-next-line no-param-reassign
         req.user = user;
       } catch (e) {
+        // eslint-disable-next-line no-param-reassign
+        AccountsServer.userId = () => null;
         console.log('Failed to resume session');
       }
+    } else {
+      // eslint-disable-next-line no-param-reassign
+      AccountsServer.userId = () => null;
     }
     next();
   });

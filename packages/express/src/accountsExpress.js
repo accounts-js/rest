@@ -28,17 +28,12 @@ const accountsExpress = (AccountsServer) => {
       try {
         const user = await AccountsServer.resumeSession(accessToken);
         // eslint-disable-next-line no-param-reassign
-        AccountsServer.userId = () => user.id;
-        // eslint-disable-next-line no-param-reassign
         req.user = user;
-      } catch (e) {
         // eslint-disable-next-line no-param-reassign
-        AccountsServer.userId = () => null;
+        req.userId = user.id;
+      } catch (e) {
         console.log('Failed to resume session');
       }
-    } else {
-      // eslint-disable-next-line no-param-reassign
-      AccountsServer.userId = () => null;
     }
     next();
   });

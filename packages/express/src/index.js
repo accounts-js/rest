@@ -2,6 +2,4 @@
 
 import accountsExpress from './accountsExpress';
 
-export {
-  accountsExpress,
-};
+export default accountsExpress;

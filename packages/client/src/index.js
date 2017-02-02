@@ -55,3 +55,22 @@ const client = {
 };
 
 export default client;
+
+const authFetch = async (path, request) => {
+  await AccountsClient.resumeSession();
+  const tokens = AccountsClient.tokens();
+  const headers = new Headers({ // eslint-disable-line no-shadow
+    'Content-Type': 'application/json',
+  });
+  if (tokens.accessToken) {
+    headers.append('accounts-access-token', tokens.accessToken);
+  }
+  return fetch(new Request(path, {
+    ...{
+      headers,
+    },
+    ...request,
+  }));
+};
+
+export { authFetch };

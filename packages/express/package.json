@@ -48,7 +48,7 @@
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
-    "@accounts/common": "0.0.2",
+    "@accounts/common": "0.0.3",
     "cors": "^2.8.1",
     "express": "^4.14.0",
     "lodash": "^4.16.4",

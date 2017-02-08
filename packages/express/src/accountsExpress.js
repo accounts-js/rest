@@ -19,9 +19,7 @@ const accountsExpress = (AccountsServer) => {
 
   router.use(cors());
 
-  const sendError = (res, err) => (err.serialize
-  ? res.status(500).jsonp(err.serialize().message)
-  : res.status(500).jsonp({ message: err.message }));
+  const sendError = (res, err) => (res.status(500).jsonp({ message: err.message }));
 
   router.use(async (req, res, next) => {
     const accessToken = get(req.headers, 'accounts-access-token', undefined) || get(req.body, 'accessToken', undefined);
@@ -53,9 +51,7 @@ const accountsExpress = (AccountsServer) => {
 
   router.post(`${path}createUser`, async (req, res) => {
     if (AccountsServer.options().forbidClientAccountCreation) {
-      sendError(res, new AccountsError({
-        message: 'Client account creation is forbidden',
-      }));
+      sendError(res, new AccountsError('Client account creation is forbidden'));
     }
     try {
       const user = await AccountsServer.createUser(pick(req.body.user, [

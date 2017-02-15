@@ -110,6 +110,26 @@ const accountsExpress = (AccountsServer) => {
     }
   });
 
+  router.post(`${path}sendVerificationEmail`, async (req, res) => {
+    try {
+      const { userId, email } = req.body;
+      await AccountsServer.sendVerificationEmail(userId, email);
+      res.jsonp({ message: 'Email sent' });
+    } catch (err) {
+      sendError(res, err);
+    }
+  });
+
+  router.post(`${path}sendResetPasswordEmail`, async (req, res) => {
+    try {
+      const { userId, email } = req.body;
+      await AccountsServer.sendResetPasswordEmail(userId, email);
+      res.jsonp({ message: 'Email sent' });
+    } catch (err) {
+      sendError(res, err);
+    }
+  });
+
   return router;
 };
 

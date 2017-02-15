@@ -52,6 +52,23 @@ const client = {
       }),
     });
   },
+  verifyEmail(token) {
+    return this.fetch('verifyEmail', {
+      method: 'POST',
+      body: JSON.stringify({
+        token,
+      }),
+    });
+  },
+  resetPassword(token, newPassword) {
+    return this.fetch('resetPassword', {
+      method: 'POST',
+      body: JSON.stringify({
+        token,
+        newPassword,
+      }),
+    });
+  },
 };
 
 export default client;

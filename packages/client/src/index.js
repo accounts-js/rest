@@ -52,6 +52,41 @@ const client = {
       }),
     });
   },
+  verifyEmail(token) {
+    return this.fetch('verifyEmail', {
+      method: 'POST',
+      body: JSON.stringify({
+        token,
+      }),
+    });
+  },
+  resetPassword(token, newPassword) {
+    return this.fetch('resetPassword', {
+      method: 'POST',
+      body: JSON.stringify({
+        token,
+        newPassword,
+      }),
+    });
+  },
+  sendVerificationEmail(userId, email) {
+    return this.fetch('sendVerificationEmail', {
+      method: 'POST',
+      body: JSON.stringify({
+        userId,
+        email,
+      }),
+    });
+  },
+  sendResetPasswordEmail(userId, email) {
+    return this.fetch('sendResetPasswordEmail', {
+      method: 'POST',
+      body: JSON.stringify({
+        userId,
+        email,
+      }),
+    });
+  },
 };
 
 export default client;

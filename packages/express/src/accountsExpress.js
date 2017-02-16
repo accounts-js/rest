@@ -90,6 +90,46 @@ const accountsExpress = (AccountsServer) => {
     }
   });
 
+  router.post(`${path}verifyEmail`, async (req, res) => {
+    try {
+      const { token } = req.body;
+      await AccountsServer.verifyEmail(token);
+      res.jsonp({ message: 'Email verified' });
+    } catch (err) {
+      sendError(res, err);
+    }
+  });
+
+  router.post(`${path}resetPassword`, async (req, res) => {
+    try {
+      const { token, newPassword } = req.body;
+      await AccountsServer.resetPassword(token, newPassword);
+      res.jsonp({ message: 'Password changed' });
+    } catch (err) {
+      sendError(res, err);
+    }
+  });
+
+  router.post(`${path}sendVerificationEmail`, async (req, res) => {
+    try {
+      const { userId, email } = req.body;
+      await AccountsServer.sendVerificationEmail(userId, email);
+      res.jsonp({ message: 'Email sent' });
+    } catch (err) {
+      sendError(res, err);
+    }
+  });
+
+  router.post(`${path}sendResetPasswordEmail`, async (req, res) => {
+    try {
+      const { userId, email } = req.body;
+      await AccountsServer.sendResetPasswordEmail(userId, email);
+      res.jsonp({ message: 'Email sent' });
+    } catch (err) {
+      sendError(res, err);
+    }
+  });
+
   return router;
 };
 

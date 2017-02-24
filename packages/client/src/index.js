@@ -1,25 +1,32 @@
-import AccountsClient from '@accounts/client';
+import { AccountsError } from '@accounts/common';
 
 const headers = new Headers();
 headers.append('Content-Type', 'application/json');
 
-const client = {
+export class RestClient {
+  constructor(options) {
+    this.options = options;
+  }
   async fetch(route, args) {
-    const res = await fetch(`${AccountsClient.options().server}${AccountsClient.options().path}/${route}`, {
+    const res = await fetch(`${this.options.server}${this.options.path}/${route}`, {
       headers,
       ...args,
     });
     if (res) {
       if (res.status >= 400 && res.status < 600) {
-        const json = await res.json();
-        throw new Error(json);
+        const {
+          message,
+          loginInfo,
+          errorCode,
+        } = JSON.parse(await res.json());
+        throw new AccountsError(message, loginInfo, errorCode);
       }
       return await res.json();
       // eslint-disable-next-line no-else-return
     } else {
       throw new Error('Server did not return a response');
     }
-  },
+  }
   loginWithPassword(user, password) {
     return this.fetch('loginWithPassword', {
       method: 'POST',
@@ -28,13 +35,13 @@ const client = {
         password,
       }),
     });
-  },
+  }
   createUser(user) {
     return this.fetch('createUser', {
       method: 'POST',
       body: JSON.stringify({ user }),
     });
-  },
+  }
   refreshTokens(accessToken, refreshToken) {
     return this.fetch('refreshTokens', {
       method: 'POST',
@@ -43,7 +50,7 @@ const client = {
         refreshToken,
       }),
     });
-  },
+  }
   logout(accessToken) {
     return this.fetch('logout', {
       method: 'POST',
@@ -51,7 +58,7 @@ const client = {
         accessToken,
       }),
     });
-  },
+  }
   verifyEmail(token) {
     return this.fetch('verifyEmail', {
       method: 'POST',
@@ -59,7 +66,7 @@ const client = {
         token,
       }),
     });
-  },
+  }
   resetPassword(token, newPassword) {
     return this.fetch('resetPassword', {
       method: 'POST',
@@ -68,7 +75,7 @@ const client = {
         newPassword,
       }),
     });
-  },
+  }
   sendVerificationEmail(userId, email) {
     return this.fetch('sendVerificationEmail', {
       method: 'POST',
@@ -77,7 +84,7 @@ const client = {
         email,
       }),
     });
-  },
+  }
   sendResetPasswordEmail(userId, email) {
     return this.fetch('sendResetPasswordEmail', {
       method: 'POST',
@@ -86,25 +93,28 @@ const client = {
         email,
       }),
     });
-  },
-};
+  }
+}
 
-export default client;
+export default RestClient;
 
 const authFetch = async (path, request) => {
-  await AccountsClient.resumeSession();
-  const tokens = AccountsClient.tokens();
+  await this.accounts.resumeSession();
+  const tokens = this.accounts.tokens();
   const headers = new Headers({ // eslint-disable-line no-shadow
     'Content-Type': 'application/json',
   });
   if (tokens.accessToken) {
-    headers.append('accounts-access-token', tokens.accessToken);
+    headers.set('accounts-access-token', tokens.accessToken);
+  }
+  if (request.headers) {
+    for (const pair of request.headers.entries()) {
+      headers.set(pair[0], pair[1]);
+    }
   }
   return fetch(new Request(path, {
-    ...{
-      headers,
-    },
     ...request,
+    headers,
   }));
 };
 

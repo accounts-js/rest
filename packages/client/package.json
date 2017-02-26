@@ -54,9 +54,11 @@
     "webpack": "^1.13.2",
     "webpack-node-externals": "^1.5.4"
   },
+  "peerDependencies": {
+    "@accounts/client": "0.0.6",
+    "@accounts/common": "0.0.6"
+  },
   "dependencies": {
-    "@accounts/client": "0.0.4-alpha.98931215",
-    "@accounts/common": "0.0.4-alpha.98931215",
     "es6-promise": "^4.0.5",
     "lodash": "^4.16.4"
   }

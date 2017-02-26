@@ -1,7 +1,7 @@
 // @flow
 
-import AccountsClient from '@accounts/client';
-import type { TransportInterface } from '@accounts/client';
+import type { TransportInterface, AccountsClient } from '@accounts/client';
+import { AccountsError } from '@accounts/common';
 import type {
   CreateUserType,
   PasswordLoginUserType,
@@ -25,17 +25,22 @@ export default class Client {
   }
 
   async fetch(route: string, args: Object): Promise<any> {
-    const res = await fetch(`${this.options.apiHost}${this.options.rootPath}/${route}`, {
+    // $FlowFixMe
+    const res = await fetch(`${this.options.server}${this.options.path}/${route}`, {
       headers,
       ...args,
     });
     if (res) {
       if (res.status >= 400 && res.status < 600) {
-        const json = await res.json();
-        throw new Error(json);
+        const {
+         message,
+         loginInfo,
+         errorCode,
+       } = JSON.parse(await res.json());
+        throw new AccountsError(message, loginInfo, errorCode);
       }
       return await res.json();
-      // eslint-disable-next-line no-else-return
+     // eslint-disable-next-line no-else-return
     } else {
       throw new Error('Server did not return a response');
     }
@@ -119,20 +124,23 @@ export default class Client {
   options: OptionsType;
 }
 
-const authFetch = async(path: string, request: Object) => {
-  await AccountsClient.resumeSession();
-  const tokens = AccountsClient.tokens();
+const authFetch = async (accounts: AccountsClient, path: string, request: Object) => {
+  await accounts.resumeSession();
+  const { accessToken } = await accounts.tokens();
   const headers = new Headers({ // eslint-disable-line no-shadow
     'Content-Type': 'application/json',
   });
-  if (tokens.accessToken) {
-    headers.append('accounts-access-token', tokens.accessToken);
+  if (accessToken) {
+    headers.set('accounts-access-token', accessToken);
+  }
+  if (request.headers) {
+    for (const pair of request.headers.entries()) {
+      headers.set(pair[0], pair[1]);
+    }
   }
   return fetch(new Request(path, {
-    ...{
-      headers,
-    },
     ...request,
+    headers,
   }));
 };
 

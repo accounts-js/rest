@@ -55,8 +55,8 @@
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
-    "@accounts/common": "0.0.3",
-    "@accounts/client": "0.0.3",
+    "@accounts/common": "next",
+    "@accounts/client": "next",
     "es6-promise": "^4.0.5",
     "lodash": "^4.16.4"
   }

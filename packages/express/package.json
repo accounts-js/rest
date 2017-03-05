@@ -52,8 +52,10 @@
     "webpack": "^1.13.2",
     "webpack-node-externals": "^1.5.4"
   },
+  "peerDependencies": {
+    "@accounts/common": "0.0.3"
+  },
   "dependencies": {
-    "@accounts/common": "0.0.3",
     "cors": "^2.8.1",
     "express": "^4.14.0",
     "lodash": "^4.16.4",

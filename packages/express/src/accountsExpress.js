@@ -12,10 +12,12 @@ const getUserAgent = (req) => {
   return userAgent;
 };
 
-const accountsExpress = (AccountsServer) => {
+const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
+  const getAccountsServer = typeof accountsServerProvider === 'function' ?
+    (req, res) => accountsServerProvider(req, res) : () => accountsServerProvider;
+
   // eslint-disable-next-line new-cap
   const router = express.Router();
-  const path = `${AccountsServer.options().path}/`;
 
   router.use(cors());
 
@@ -25,7 +27,8 @@ const accountsExpress = (AccountsServer) => {
     const accessToken = get(req.headers, 'accounts-access-token', undefined) || get(req.body, 'accessToken', undefined);
     if (!isEmpty(accessToken)) {
       try {
-        const user = await AccountsServer.resumeSession(accessToken);
+        const accountsServer = getAccountsServer(req, res);
+        const user = await accountsServer.resumeSession(accessToken);
         // eslint-disable-next-line no-param-reassign
         req.user = user;
         // eslint-disable-next-line no-param-reassign
@@ -42,7 +45,8 @@ const accountsExpress = (AccountsServer) => {
       const { user, password } = req.body;
       const userAgent = getUserAgent(req);
       const ip = requestIp.getClientIp(req);
-      const loggedInUser = await AccountsServer.loginWithPassword(user, password, ip, userAgent);
+      const accountsServer = getAccountsServer(req, res);
+      const loggedInUser = await accountsServer.loginWithPassword(user, password, ip, userAgent);
       res.jsonp(loggedInUser);
     } catch (err) {
       sendError(res, err);
@@ -50,11 +54,12 @@ const accountsExpress = (AccountsServer) => {
   });
 
   router.post(`${path}createUser`, async (req, res) => {
-    if (AccountsServer.options().forbidClientAccountCreation) {
+    const accountsServer = getAccountsServer(req, res);
+    if (accountsServer.options().forbidClientAccountCreation) {
       sendError(res, new AccountsError('Client account creation is forbidden'));
     }
     try {
-      const user = await AccountsServer.createUser(pick(req.body.user, [
+      const user = await accountsServer.createUser(pick(req.body.user, [
         'username',
         'password',
         'email',
@@ -71,7 +76,8 @@ const accountsExpress = (AccountsServer) => {
       const { accessToken, refreshToken } = req.body;
       const userAgent = getUserAgent(req);
       const ip = requestIp.getClientIp(req);
-      const refreshedSession = await AccountsServer.refreshTokens(
+      const accountsServer = getAccountsServer(req, res);
+      const refreshedSession = await accountsServer.refreshTokens(
         accessToken, refreshToken, ip, userAgent,
       );
       res.jsonp(refreshedSession);
@@ -83,7 +89,8 @@ const accountsExpress = (AccountsServer) => {
   router.post(`${path}logout`, async (req, res) => {
     try {
       const { accessToken } = req.body;
-      await AccountsServer.logout(accessToken);
+      const accountsServer = getAccountsServer(req, res);
+      await accountsServer.logout(accessToken);
       res.jsonp({ message: 'Logged out' });
     } catch (err) {
       sendError(res, err);
@@ -93,7 +100,8 @@ const accountsExpress = (AccountsServer) => {
   router.post(`${path}verifyEmail`, async (req, res) => {
     try {
       const { token } = req.body;
-      await AccountsServer.verifyEmail(token);
+      const accountsServer = getAccountsServer(req, res);
+      await accountsServer.verifyEmail(token);
       res.jsonp({ message: 'Email verified' });
     } catch (err) {
       sendError(res, err);
@@ -103,7 +111,8 @@ const accountsExpress = (AccountsServer) => {
   router.post(`${path}resetPassword`, async (req, res) => {
     try {
       const { token, newPassword } = req.body;
-      await AccountsServer.resetPassword(token, newPassword);
+      const accountsServer = getAccountsServer(req, res);
+      await accountsServer.resetPassword(token, newPassword);
       res.jsonp({ message: 'Password changed' });
     } catch (err) {
       sendError(res, err);
@@ -113,7 +122,8 @@ const accountsExpress = (AccountsServer) => {
   router.post(`${path}sendVerificationEmail`, async (req, res) => {
     try {
       const { userId, email } = req.body;
-      await AccountsServer.sendVerificationEmail(userId, email);
+      const accountsServer = getAccountsServer(req, res);
+      await accountsServer.sendVerificationEmail(userId, email);
       res.jsonp({ message: 'Email sent' });
     } catch (err) {
       sendError(res, err);
@@ -123,7 +133,8 @@ const accountsExpress = (AccountsServer) => {
   router.post(`${path}sendResetPasswordEmail`, async (req, res) => {
     try {
       const { userId, email } = req.body;
-      await AccountsServer.sendResetPasswordEmail(userId, email);
+      const accountsServer = getAccountsServer(req, res);
+      await accountsServer.sendResetPasswordEmail(userId, email);
       res.jsonp({ message: 'Email sent' });
     } catch (err) {
       sendError(res, err);

@@ -21,7 +21,7 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
 
   router.use(cors());
 
-  const sendError = (res, err) => (res.status(500).jsonp({ message: err.message }));
+  const sendError = (res, err) => (res.status(500).jsonp(err.toString()));
 
   router.use(async (req, res, next) => {
     const accessToken = get(req.headers, 'accounts-access-token', undefined) || get(req.body, 'accessToken', undefined);

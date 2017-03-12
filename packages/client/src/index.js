@@ -25,8 +25,7 @@ export default class Client {
   }
 
   async fetch(route: string, args: Object): Promise<any> {
-    // $FlowFixMe
-    const res = await fetch(`${this.options.server}${this.options.path}/${route}`, {
+    const res = await fetch(`${this.options.apiHost}${this.options.rootPath}/${route}`, {
       headers,
       ...args,
     });

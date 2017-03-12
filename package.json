@@ -33,8 +33,5 @@
     "eslint-plugin-react": "^6.3.0",
     "eslint-plugin-require-jsdoc": "^1.0.4",
     "flow-bin": "0.39.0"
-  },
-  "dependencies": {
-    "@accounts/client": "0.0.4-alpha.98931215"
   }
 }

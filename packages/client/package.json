@@ -17,6 +17,7 @@
     "test": "npm run testonly",
     "test-ci": "npm lint && npm coverage",
     "testonly": "jest",
+    "flow:check": "flow check",
     "flow:prepublish": "for i in `ls ./src/*.js`; do cp $i `echo $i | sed \"s/src/lib/g\" | sed \"s/js/js\\.flow/g\"`; done",
     "coverage": "npm run testonly -- --coverage",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
@@ -57,7 +58,9 @@
     "flow-bin": "^0.39.0",
     "jest": "^18.0.0",
     "webpack": "^1.13.2",
-    "webpack-node-externals": "^1.5.4"
+    "webpack-node-externals": "^1.5.4",
+    "@accounts/client": "0.0.10",
+    "@accounts/common": "0.0.10"
   },
   "peerDependencies": {
     "@accounts/client": "0.0.10",

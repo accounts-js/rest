@@ -4,6 +4,7 @@
     "start": "lerna exec -- npm start",
     "link": "lerna exec -- npm link @accounts/client; lerna exec -- npm link @accounts/server; lerna exec -- npm link @accounts/common; lerna exec -- npm link",
     "compile": "lerna run compile",
+    "publish:canary": "lerna publish --canary",
     "flow:check": "lerna run flow:check",
     "lint": "eslint packages/*/src",
     "prebootstrap": "npm install",

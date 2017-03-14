@@ -132,9 +132,9 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
 
   router.post(`${path}sendVerificationEmail`, async (req, res) => {
     try {
-      const { userId, email } = req.body;
+      const { email } = req.body;
       const accountsServer = getAccountsServer(req, res);
-      await accountsServer.sendVerificationEmail(userId, email);
+      await accountsServer.sendVerificationEmail(email);
       res.jsonp({ message: 'Email sent' });
     } catch (err) {
       sendError(res, err);
@@ -143,9 +143,9 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
 
   router.post(`${path}sendResetPasswordEmail`, async (req, res) => {
     try {
-      const { userId, email } = req.body;
+      const { email } = req.body;
       const accountsServer = getAccountsServer(req, res);
-      await accountsServer.sendResetPasswordEmail(userId, email);
+      await accountsServer.sendResetPasswordEmail(email);
       res.jsonp({ message: 'Email sent' });
     } catch (err) {
       sendError(res, err);

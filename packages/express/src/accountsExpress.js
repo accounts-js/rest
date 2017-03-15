@@ -53,6 +53,17 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
     }
   });
 
+  router.post(`${path}getUser`, async (req, res) => {
+    try {
+      const { accessToken } = req.body;
+      const accountsServer = getAccountsServer(req, res);
+      const user = await accountsServer.resumeSession(accessToken);
+      res.jsonp(user);
+    } catch (err) {
+      sendError(res, err);
+    }
+  });
+
   router.post(`${path}createUser`, async (req, res) => {
     const accountsServer = getAccountsServer(req, res);
     if (accountsServer.options().forbidClientAccountCreation) {

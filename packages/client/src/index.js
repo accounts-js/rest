@@ -6,6 +6,7 @@ import type {
   CreateUserType,
   PasswordLoginUserType,
   LoginReturnType,
+  UserObjectType,
 } from '@accounts/common';
 
 export type OptionsType = {
@@ -86,6 +87,15 @@ export default class Client {
       method: 'POST',
       body: JSON.stringify({
         token,
+      }),
+    });
+  }
+
+  async getUser(accessToken: string): Promise<UserObjectType> {
+    return this.fetch('getUser', {
+      method: 'POST',
+      body: JSON.stringify({
+        accessToken,
       }),
     });
   }

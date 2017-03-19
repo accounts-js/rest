@@ -110,21 +110,19 @@ export default class Client {
     });
   }
 
-  sendVerificationEmail(userId: string, email: string): Promise<void> {
+  sendVerificationEmail(email: string): Promise<void> {
     return this.fetch('sendVerificationEmail', {
       method: 'POST',
       body: JSON.stringify({
-        userId,
         email,
       }),
     });
   }
 
-  sendResetPasswordEmail(userId: string, email: string): Promise<void> {
+  sendResetPasswordEmail(email: string): Promise<void> {
     return this.fetch('sendResetPasswordEmail', {
       method: 'POST',
       body: JSON.stringify({
-        userId,
         email,
       }),
     });

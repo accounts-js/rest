@@ -7,6 +7,7 @@ import type {
   PasswordLoginUserType,
   LoginReturnType,
   UserObjectType,
+  ImpersonateReturnType,
 } from '@accounts/common';
 
 export type OptionsType = {
@@ -52,6 +53,16 @@ export default class Client {
       body: JSON.stringify({
         user,
         password,
+      }),
+    });
+  }
+
+  impersonate(accessToken: string, username: string): Promise<ImpersonateReturnType> {
+    return fetch('impersonate', {
+      method: 'POST',
+      body: JSON.stringify({
+        accessToken,
+        username,
       }),
     });
   }

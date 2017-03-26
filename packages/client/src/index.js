@@ -60,23 +60,20 @@ export default class Client {
     return this.fetch('loginWithPassword', args, customHeaders);
   }
 
-<<<<<<< impersonation
-  impersonate(accessToken: string, username: string): Promise<ImpersonateReturnType> {
-    return fetch('impersonate', {
+  // eslint-disable-next-line max-len
+  impersonate(accessToken: string, username: string, customHeaders?: Object): Promise<ImpersonateReturnType> {
+    const args = {
       method: 'POST',
       body: JSON.stringify({
         accessToken,
         username,
       }),
-    });
+    };
+    return fetch('impersonate', args, customHeaders);
   }
 
-  async createUser(user: CreateUserType): Promise<string> {
-    return this.fetch('createUser', {
-=======
   async createUser(user: CreateUserType, customHeaders?: Object): Promise<string> {
     const args = {
->>>>>>> master
       method: 'POST',
       body: JSON.stringify({ user }),
     };

@@ -43,6 +43,8 @@
   "author": "Tim Mikeladze",
   "license": "MIT",
   "devDependencies": {
+    "@accounts/client": "0.0.10",
+    "@accounts/common": "0.0.10",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
@@ -57,10 +59,9 @@
     "coveralls": "^2.11.14",
     "flow-bin": "^0.39.0",
     "jest": "^18.0.0",
+    "node-fetch": "^1.6.3",
     "webpack": "^1.13.2",
-    "webpack-node-externals": "^1.5.4",
-    "@accounts/client": "0.0.10",
-    "@accounts/common": "0.0.10"
+    "webpack-node-externals": "^1.5.4"
   },
   "peerDependencies": {
     "@accounts/client": "0.0.10",

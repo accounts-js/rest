@@ -168,7 +168,7 @@ export default class Client {
 }
 
 const authFetch = async (accounts: AccountsClient, path: string, request: Object) => {
-  await accounts.resumeSession();
+  await accounts.refreshSession();
   const { accessToken } = await accounts.tokens();
   const headers = new Headers({ // eslint-disable-line no-shadow
     'Content-Type': 'application/json',

@@ -69,7 +69,7 @@ export default class Client {
         username,
       }),
     };
-    return fetch('impersonate', args, customHeaders);
+    return this.fetch('impersonate', args, customHeaders);
   }
 
   async createUser(user: CreateUserType, customHeaders?: Object): Promise<string> {

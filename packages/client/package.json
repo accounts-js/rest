@@ -43,8 +43,8 @@
   "author": "Tim Mikeladze",
   "license": "MIT",
   "devDependencies": {
-    "@accounts/client": "0.0.10",
-    "@accounts/common": "0.0.10",
+    "@accounts/client": "0.0.11",
+    "@accounts/common": "0.0.11",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",

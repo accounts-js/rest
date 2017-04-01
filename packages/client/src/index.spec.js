@@ -35,4 +35,16 @@ describe('RestClient', () => {
         .then(() => expect(window.fetch.mock.calls[1][1].headers.get('origin')).toBe('localhost:3000')),
     );
   });
+
+  describe('impersonate', () => {
+    const client = new RestClient({
+      apiHost: 'http://localhost:3000',
+      rootPath: '/accounts',
+    });
+
+    it('should call fetch with impersonate path', () =>
+      client.impersonate('token', 'user')
+        .then(() => expect(window.fetch.mock.calls[2][0]).toBe('http://localhost:3000/accounts/impersonate'))
+    );
+  });
 });

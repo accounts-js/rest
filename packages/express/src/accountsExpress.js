@@ -55,11 +55,11 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
 
   router.post(`${path}impersonate`, async (req, res) => {
     try {
-      const { user, accessToken } = req.body;
+      const { username, accessToken } = req.body;
       const userAgent = getUserAgent(req);
       const ip = requestIp.getClientIp(req);
       const accountsServer = getAccountsServer(req, res);
-      const impersonateRes = await accountsServer.impersonate(accessToken, user, ip, userAgent);
+      const impersonateRes = await accountsServer.impersonate(accessToken, username, ip, userAgent);
       res.jsonp(impersonateRes);
     } catch (err) {
       sendError(res, err);

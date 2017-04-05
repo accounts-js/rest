@@ -64,8 +64,8 @@
     "webpack-node-externals": "^1.5.4"
   },
   "peerDependencies": {
-    "@accounts/client": "0.0.10",
-    "@accounts/common": "0.0.10"
+    "@accounts/client": "^0.0.15",
+    "@accounts/common": "^0.0.15"
   },
   "dependencies": {
     "es6-promise": "^4.0.5",

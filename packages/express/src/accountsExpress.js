@@ -48,7 +48,7 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const ip = requestIp.getClientIp(req);
       const accountsServer = getAccountsServer(req, res);
       const loggedInUser = await accountsServer.loginWithPassword(user, password, ip, userAgent);
-      res.jsonp(loggedInUser);
+      res.json(loggedInUser);
     } catch (err) {
       sendError(res, err);
     }
@@ -61,7 +61,7 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const ip = requestIp.getClientIp(req);
       const accountsServer = getAccountsServer(req, res);
       const impersonateRes = await accountsServer.impersonate(accessToken, username, ip, userAgent);
-      res.jsonp(impersonateRes);
+      res.json(impersonateRes);
     } catch (err) {
       sendError(res, err);
     }
@@ -72,7 +72,7 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const { accessToken } = req.body;
       const accountsServer = getAccountsServer(req, res);
       const user = await accountsServer.resumeSession(accessToken);
-      res.jsonp(user);
+      res.json(user);
     } catch (err) {
       sendError(res, err);
     }
@@ -90,7 +90,7 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
         'email',
         'profile',
       ]));
-      res.jsonp(user);
+      res.json(user);
     } catch (err) {
       sendError(res, err);
     }
@@ -105,7 +105,7 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const refreshedSession = await accountsServer.refreshTokens(
         accessToken, refreshToken, ip, userAgent,
       );
-      res.jsonp(refreshedSession);
+      res.json(refreshedSession);
     } catch (err) {
       sendError(res, err);
     }
@@ -116,7 +116,7 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const { accessToken } = req.body;
       const accountsServer = getAccountsServer(req, res);
       await accountsServer.logout(accessToken);
-      res.jsonp({ message: 'Logged out' });
+      res.json({ message: 'Logged out' });
     } catch (err) {
       sendError(res, err);
     }
@@ -127,7 +127,7 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const { token } = req.body;
       const accountsServer = getAccountsServer(req, res);
       await accountsServer.verifyEmail(token);
-      res.jsonp({ message: 'Email verified' });
+      res.json({ message: 'Email verified' });
     } catch (err) {
       sendError(res, err);
     }
@@ -138,7 +138,7 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const { token, newPassword } = req.body;
       const accountsServer = getAccountsServer(req, res);
       await accountsServer.resetPassword(token, newPassword);
-      res.jsonp({ message: 'Password changed' });
+      res.json({ message: 'Password changed' });
     } catch (err) {
       sendError(res, err);
     }
@@ -149,7 +149,7 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const { email } = req.body;
       const accountsServer = getAccountsServer(req, res);
       await accountsServer.sendVerificationEmail(email);
-      res.jsonp({ message: 'Email sent' });
+      res.json({ message: 'Email sent' });
     } catch (err) {
       sendError(res, err);
     }
@@ -160,7 +160,7 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const { email } = req.body;
       const accountsServer = getAccountsServer(req, res);
       await accountsServer.sendResetPasswordEmail(email);
-      res.jsonp({ message: 'Email sent' });
+      res.json({ message: 'Email sent' });
     } catch (err) {
       sendError(res, err);
     }

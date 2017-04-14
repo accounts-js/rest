@@ -38,7 +38,7 @@ export default class Client {
          message,
          loginInfo,
          errorCode,
-       } = JSON.parse(await res.json());
+       } = await res.json();
         throw new AccountsError(message, loginInfo, errorCode);
       }
       return await res.json();

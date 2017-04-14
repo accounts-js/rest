@@ -1,6 +1,5 @@
 import express from 'express';
 import { get, isEmpty, pick } from 'lodash';
-import cors from 'cors';
 import { AccountsError } from '@accounts/common';
 import requestIp from 'request-ip';
 
@@ -19,9 +18,11 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
   // eslint-disable-next-line new-cap
   const router = express.Router();
 
-  router.use(cors());
-
-  const sendError = (res, err) => (res.status(500).jsonp(err.toString()));
+  const sendError = (res, err) => res.status(400).json({
+    message: err.message,
+    loginInfo: err.loginInfo,
+    errorCode: err.errorCode,
+  });
 
   router.use(async (req, res, next) => {
     const accessToken = get(req.headers, 'accounts-access-token', undefined) || get(req.body, 'accessToken', undefined);

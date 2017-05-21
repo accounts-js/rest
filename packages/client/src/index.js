@@ -16,8 +16,9 @@ export type OptionsType = {
   rootPath: string
 };
 
-const headers = new Headers();
-headers.append('Content-Type', 'application/json');
+const headers = {
+  'Content-Type': 'application/json',
+};
 
 export default class Client {
   constructor(options: OptionsType) {
@@ -32,6 +33,7 @@ export default class Client {
       headers: this._loadHeadersObject(customHeaders),
       ...args,
     });
+
     if (res) {
       if (res.status >= 400 && res.status < 600) {
         const {
@@ -155,8 +157,8 @@ export default class Client {
 
   _loadHeadersObject(plainHeaders: ?Object): Headers {
     if (isPlainObject(plainHeaders)) {
-      const customHeaders = new Headers(headers);
-      forIn(plainHeaders, (v: string, k: string) => customHeaders.set(k, v));
+      const customHeaders = headers;
+      forIn(plainHeaders, (v: string, k: string) => { customHeaders[k] = v; });
 
       return customHeaders;
     }
@@ -170,21 +172,22 @@ export default class Client {
 const authFetch = async (accounts: AccountsClient, path: string, request: Object) => {
   await accounts.refreshSession();
   const { accessToken } = await accounts.tokens();
-  const headers = new Headers({ // eslint-disable-line no-shadow
+  const headers = { // eslint-disable-line no-shadow
     'Content-Type': 'application/json',
-  });
+  };
+
   if (accessToken) {
-    headers.set('accounts-access-token', accessToken);
+    headers['accounts-access-token'] = accessToken;
   }
+
   if (request.headers) {
-    for (const pair of request.headers.entries()) {
-      headers.set(pair[0], pair[1]);
-    }
+    forIn(request.headers, (v: string, k: string) => { headers[v] = k; });
   }
-  return fetch(new Request(path, {
+
+  return fetch(path, {
     ...request,
     headers,
-  }));
+  });
 };
 
 export { authFetch };

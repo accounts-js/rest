@@ -32,7 +32,7 @@ describe('RestClient', () => {
 
     it('should enable custom headers', () =>
       client.fetch('route', {}, { origin: 'localhost:3000' })
-        .then(() => expect(window.fetch.mock.calls[1][1].headers.get('origin')).toBe('localhost:3000')),
+        .then(() => expect(window.fetch.mock.calls[1][1].headers.origin).toBe('localhost:3000')),
     );
   });
 

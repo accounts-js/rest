@@ -68,6 +68,7 @@
     "@accounts/common": "^0.0.15"
   },
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "es6-promise": "^4.0.5",
     "lodash": "^4.16.4"
   }

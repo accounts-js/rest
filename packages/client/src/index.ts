@@ -1,9 +1,7 @@
-// @flow
-
 import { forIn, isPlainObject } from 'lodash';
-import type { TransportInterface, AccountsClient } from '@accounts/client';
-import { AccountsError } from '@accounts/common';
-import type {
+import { TransportInterface, AccountsClient } from '@accounts/client';
+import {
+  AccountsError,
   CreateUserType,
   PasswordLoginUserType,
   LoginReturnType,
@@ -11,47 +9,52 @@ import type {
   ImpersonateReturnType,
 } from '@accounts/common';
 
-export type OptionsType = {
-  apiHost: string,
-  rootPath: string
-};
+export interface OptionsType {
+  apiHost: string;
+  rootPath: string;
+}
 
 const headers = {
   'Content-Type': 'application/json',
 };
 
-export default class Client {
+export default class Client implements TransportInterface {
+  private options: OptionsType;
+
   constructor(options: OptionsType) {
-    // Enforce flow interface on current class
-    // eslint-disable-next-line no-unused-expressions
-    (this: TransportInterface);
     this.options = options;
   }
 
-  async fetch(route: string, args: Object, customHeaders?: Object): Promise<any> {
-    const res = await fetch(`${this.options.apiHost}${this.options.rootPath}/${route}`, {
+  public async fetch(
+    route: string,
+    args: object,
+    customHeaders?: object
+  ): Promise<any> {
+    const fetchOptions = {
       headers: this._loadHeadersObject(customHeaders),
       ...args,
-    });
+    };
+    const res = await fetch(
+      `${this.options.apiHost}${this.options.rootPath}/${route}`,
+      fetchOptions
+    );
 
     if (res) {
       if (res.status >= 400 && res.status < 600) {
-        const {
-         message,
-         loginInfo,
-         errorCode,
-       } = await res.json();
+        const { message, loginInfo, errorCode } = await res.json();
         throw new AccountsError(message, loginInfo, errorCode);
       }
       return await res.json();
-     // eslint-disable-next-line no-else-return
     } else {
       throw new Error('Server did not return a response');
     }
   }
 
-  // eslint-disable-next-line max-len
-  loginWithPassword(user: PasswordLoginUserType, password: string, customHeaders?: Object): Promise<LoginReturnType> {
+  public loginWithPassword(
+    user: PasswordLoginUserType,
+    password: string,
+    customHeaders?: object
+  ): Promise<LoginReturnType> {
     const args = {
       method: 'POST',
       body: JSON.stringify({
@@ -62,8 +65,11 @@ export default class Client {
     return this.fetch('loginWithPassword', args, customHeaders);
   }
 
-  // eslint-disable-next-line max-len
-  impersonate(accessToken: string, username: string, customHeaders?: Object): Promise<ImpersonateReturnType> {
+  public impersonate(
+    accessToken: string,
+    username: string,
+    customHeaders?: object
+  ): Promise<ImpersonateReturnType> {
     const args = {
       method: 'POST',
       body: JSON.stringify({
@@ -74,7 +80,10 @@ export default class Client {
     return this.fetch('impersonate', args, customHeaders);
   }
 
-  async createUser(user: CreateUserType, customHeaders?: Object): Promise<string> {
+  public async createUser(
+    user: CreateUserType,
+    customHeaders?: object
+  ): Promise<string> {
     const args = {
       method: 'POST',
       body: JSON.stringify({ user }),
@@ -82,8 +91,11 @@ export default class Client {
     return this.fetch('createUser', args, customHeaders);
   }
 
-  // eslint-disable-next-line max-len
-  refreshTokens(accessToken: string, refreshToken: string, customHeaders?: Object): Promise<LoginReturnType> {
+  public refreshTokens(
+    accessToken: string,
+    refreshToken: string,
+    customHeaders?: object
+  ): Promise<LoginReturnType> {
     const args = {
       method: 'POST',
       body: JSON.stringify({
@@ -94,7 +106,7 @@ export default class Client {
     return this.fetch('refreshTokens', args, customHeaders);
   }
 
-  logout(accessToken: string, customHeaders?: Object): Promise<void> {
+  public logout(accessToken: string, customHeaders?: object): Promise<void> {
     const args = {
       method: 'POST',
       body: JSON.stringify({
@@ -104,7 +116,7 @@ export default class Client {
     return this.fetch('logout', args, customHeaders);
   }
 
-  verifyEmail(token: string, customHeaders?: Object): Promise<void> {
+  public verifyEmail(token: string, customHeaders?: object): Promise<void> {
     const args = {
       method: 'POST',
       body: JSON.stringify({
@@ -114,7 +126,10 @@ export default class Client {
     return this.fetch('verifyEmail', args, customHeaders);
   }
 
-  async getUser(accessToken: string, customHeaders?: Object): Promise<UserObjectType> {
+  public async getUser(
+    accessToken: string,
+    customHeaders?: object
+  ): Promise<UserObjectType> {
     const args = {
       method: 'POST',
       body: JSON.stringify({
@@ -124,7 +139,11 @@ export default class Client {
     return this.fetch('getUser', args, customHeaders);
   }
 
-  resetPassword(token: string, newPassword: string, customHeaders?: Object): Promise<void> {
+  public resetPassword(
+    token: string,
+    newPassword: string,
+    customHeaders?: object
+  ): Promise<void> {
     const args = {
       method: 'POST',
       body: JSON.stringify({
@@ -135,7 +154,10 @@ export default class Client {
     return this.fetch('resetPassword', args, customHeaders);
   }
 
-  sendVerificationEmail(email: string, customHeaders?: Object): Promise<void> {
+  public sendVerificationEmail(
+    email: string,
+    customHeaders?: object
+  ): Promise<void> {
     const args = {
       method: 'POST',
       body: JSON.stringify({
@@ -145,7 +167,10 @@ export default class Client {
     return this.fetch('sendVerificationEmail', args, customHeaders);
   }
 
-  sendResetPasswordEmail(email: string, customHeaders?: Object): Promise<void> {
+  public sendResetPasswordEmail(
+    email: string,
+    customHeaders?: object
+  ): Promise<void> {
     const args = {
       method: 'POST',
       body: JSON.stringify({
@@ -155,39 +180,46 @@ export default class Client {
     return this.fetch('sendResetPasswordEmail', args, customHeaders);
   }
 
-  _loadHeadersObject(plainHeaders: ?Object): Headers {
+  private _loadHeadersObject(plainHeaders: object): object {
     if (isPlainObject(plainHeaders)) {
       const customHeaders = headers;
-      forIn(plainHeaders, (v: string, k: string) => { customHeaders[k] = v; });
+      forIn(plainHeaders, (v: string, k: string) => {
+        customHeaders[k] = v;
+      });
 
       return customHeaders;
     }
 
     return headers;
   }
-
-  options: OptionsType;
 }
 
-const authFetch = async (accounts: AccountsClient, path: string, request: Object) => {
+const authFetch = async (
+  accounts: AccountsClient,
+  path: string,
+  request: object
+) => {
   await accounts.refreshSession();
   const { accessToken } = await accounts.tokens();
-  const headers = { // eslint-disable-line no-shadow
-    'Content-Type': 'application/json',
-  };
+  const headersCopy = { ...headers };
 
   if (accessToken) {
-    headers['accounts-access-token'] = accessToken;
+    headersCopy['accounts-access-token'] = accessToken;
   }
 
-  if (request.headers) {
-    forIn(request.headers, (v: string, k: string) => { headers[v] = k; });
+  /* tslint:disable no-string-literal */
+  if (request['headers']) {
+    forIn(request['headers'], (v: string, k: string) => {
+      headersCopy[v] = k;
+    });
   }
+  /* tslint:enable no-string-literal */
 
-  return fetch(path, {
+  const fetchOptions = {
     ...request,
-    headers,
-  });
+    headers: headersCopy,
+  };
+  return fetch(path, fetchOptions);
 };
 
 export { authFetch };

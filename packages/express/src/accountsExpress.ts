@@ -3,36 +3,39 @@ import { get, isEmpty, pick } from 'lodash';
 import { AccountsError } from '@accounts/common';
 import requestIp from 'request-ip';
 
-const getUserAgent = (req) => {
+const getUserAgent = req => {
   let userAgent = req.headers['user-agent'] || '';
-  if (req.headers['x-ucbrowser-ua']) {  // special case of UC Browser
+  if (req.headers['x-ucbrowser-ua']) {
+    // special case of UC Browser
     userAgent = req.headers['x-ucbrowser-ua'];
   }
   return userAgent;
 };
 
 const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
-  const getAccountsServer = typeof accountsServerProvider === 'function' ?
-    (req, res) => accountsServerProvider(req, res) : () => accountsServerProvider;
+  const getAccountsServer =
+    typeof accountsServerProvider === 'function'
+      ? (req, res) => accountsServerProvider(req, res)
+      : () => accountsServerProvider;
 
-  // eslint-disable-next-line new-cap
   const router = express.Router();
 
-  const sendError = (res, err) => res.status(400).json({
-    message: err.message,
-    loginInfo: err.loginInfo,
-    errorCode: err.errorCode,
-  });
+  const sendError = (res, err) =>
+    res.status(400).json({
+      message: err.message,
+      loginInfo: err.loginInfo,
+      errorCode: err.errorCode,
+    });
 
   router.use(async (req, res, next) => {
-    const accessToken = get(req.headers, 'accounts-access-token', undefined) || get(req.body, 'accessToken', undefined);
+    const accessToken =
+      get(req.headers, 'accounts-access-token', undefined) ||
+      get(req.body, 'accessToken', undefined);
     if (!isEmpty(accessToken)) {
       try {
         const accountsServer = getAccountsServer(req, res);
         const user = await accountsServer.resumeSession(accessToken);
-        // eslint-disable-next-line no-param-reassign
         req.user = user;
-        // eslint-disable-next-line no-param-reassign
         req.userId = user.id;
       } catch (e) {
         console.log('Failed to resume session');
@@ -47,7 +50,12 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const userAgent = getUserAgent(req);
       const ip = requestIp.getClientIp(req);
       const accountsServer = getAccountsServer(req, res);
-      const loggedInUser = await accountsServer.loginWithPassword(user, password, ip, userAgent);
+      const loggedInUser = await accountsServer.loginWithPassword(
+        user,
+        password,
+        ip,
+        userAgent
+      );
       res.json(loggedInUser);
     } catch (err) {
       sendError(res, err);
@@ -60,7 +68,12 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const userAgent = getUserAgent(req);
       const ip = requestIp.getClientIp(req);
       const accountsServer = getAccountsServer(req, res);
-      const impersonateRes = await accountsServer.impersonate(accessToken, username, ip, userAgent);
+      const impersonateRes = await accountsServer.impersonate(
+        accessToken,
+        username,
+        ip,
+        userAgent
+      );
       res.json(impersonateRes);
     } catch (err) {
       sendError(res, err);
@@ -84,12 +97,9 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       sendError(res, new AccountsError('Client account creation is forbidden'));
     }
     try {
-      const user = await accountsServer.createUser(pick(req.body.user, [
-        'username',
-        'password',
-        'email',
-        'profile',
-      ]));
+      const user = await accountsServer.createUser(
+        pick(req.body.user, ['username', 'password', 'email', 'profile'])
+      );
       res.json(user);
     } catch (err) {
       sendError(res, err);
@@ -103,7 +113,10 @@ const accountsExpress = (accountsServerProvider, { path = '/accounts/' }) => {
       const ip = requestIp.getClientIp(req);
       const accountsServer = getAccountsServer(req, res);
       const refreshedSession = await accountsServer.refreshTokens(
-        accessToken, refreshToken, ip, userAgent,
+        accessToken,
+        refreshToken,
+        ip,
+        userAgent
       );
       res.json(refreshedSession);
     } catch (err) {

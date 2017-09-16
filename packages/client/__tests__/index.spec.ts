@@ -7,7 +7,7 @@ window.fetch = jest.fn().mockImplementation(() => ({
 
 window.Headers = fetch.Headers;
 
-const RestClient = require('./index').default;
+const RestClient = require('../src/index').default;
 
 describe('RestClient', () => {
   it('should have a way to configure api host address and root path', () => {
@@ -20,7 +20,9 @@ describe('RestClient', () => {
     expect(client.options.rootPath).toBe('accounts');
 
     return client.fetch('try').then(() => {
-      expect(window.fetch.mock.calls[0][0]).toBe('http://localhost:3000/accounts/try');
+      expect(window.fetch.mock.calls[0][0]).toBe(
+        'http://localhost:3000/accounts/try'
+      );
     });
   });
 
@@ -31,9 +33,13 @@ describe('RestClient', () => {
     });
 
     it('should enable custom headers', () =>
-      client.fetch('route', {}, { origin: 'localhost:3000' })
-        .then(() => expect(window.fetch.mock.calls[1][1].headers.origin).toBe('localhost:3000')),
-    );
+      client
+        .fetch('route', {}, { origin: 'localhost:3000' })
+        .then(() =>
+          expect(window.fetch.mock.calls[1][1].headers.origin).toBe(
+            'localhost:3000'
+          )
+        ));
   });
 
   describe('impersonate', () => {
@@ -43,8 +49,12 @@ describe('RestClient', () => {
     });
 
     it('should call fetch with impersonate path', () =>
-      client.impersonate('token', 'user')
-        .then(() => expect(window.fetch.mock.calls[2][0]).toBe('http://localhost:3000/accounts/impersonate'))
-    );
+      client
+        .impersonate('token', 'user')
+        .then(() =>
+          expect(window.fetch.mock.calls[2][0]).toBe(
+            'http://localhost:3000/accounts/impersonate'
+          )
+        ));
   });
 });

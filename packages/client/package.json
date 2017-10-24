@@ -1,6 +1,6 @@
 {
   "name": "@accounts/rest-client",
-  "version": "0.0.14",
+  "version": "0.1.0",
   "description": "REST client for accounts",
   "main": "lib/index.js",
   "publishConfig": {
@@ -45,15 +45,15 @@
   "license": "MIT",
   "devDependencies": {
     "@accounts/client": "0.0.11",
-    "@accounts/common": "0.0.11",
+    "@accounts/common": "0.1.0",
     "coveralls": "^2.11.14",
-    "node-fetch": "^1.6.3"
+    "node-fetch": "^1.7.3"
   },
   "peerDependencies": {
     "@accounts/client": "^0.0.15",
-    "@accounts/common": "^0.0.15"
+    "@accounts/common": "^0.1.0"
   },
   "dependencies": {
-    "lodash": "^4.16.4"
+    "lodash": "^4.17.4"
   }
 }

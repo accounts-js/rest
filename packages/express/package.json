@@ -1,6 +1,6 @@
 {
   "name": "@accounts/rest-express",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "description": "Server side REST express middleware for accounts",
   "main": "lib/index.js",
   "publishConfig": {
@@ -40,15 +40,17 @@
   "author": "Tim Mikeladze",
   "license": "MIT",
   "devDependencies": {
-    "@accounts/common": "0.0.10",
-    "coveralls": "^2.11.14"
+    "@accounts/common": "^0.1.0",
+    "@accounts/server": "^0.1.0",
+    "coveralls": "^3.0.0"
   },
   "peerDependencies": {
-    "@accounts/common": "0.0.10"
+    "@accounts/common": "^0.1.0",
+    "@accounts/server": "^0.1.0"
   },
   "dependencies": {
-    "express": "^4.14.0",
-    "lodash": "^4.16.4",
-    "request-ip": "^1.2.3"
+    "express": "^4.16.2",
+    "lodash": "^4.17.4",
+    "request-ip": "^2.0.2"
   }
 }

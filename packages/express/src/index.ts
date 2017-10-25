@@ -1,9 +1,9 @@
 import * as express from 'express';
 import { Router } from 'express';
 import { get, isEmpty, pick } from 'lodash';
+import * as requestIp from 'request-ip';
 import { AccountsError } from '@accounts/common';
 import { AccountsServer } from '@accounts/server';
-import * as requestIp from 'request-ip';
 
 export const getUserAgent = req => {
   let userAgent = req.headers['user-agent'] || '';
@@ -173,6 +173,26 @@ const accountsExpress = (
         const { email } = req.body;
         await services.password.sendResetPasswordEmail(email);
         res.json({ message: 'Email sent' });
+      } catch (err) {
+        sendError(res, err);
+      }
+    });
+  }
+
+  if (services.oauth) {
+    router.get(`${path}/oauth/:provider/callback`, async (req, res) => {
+      try {
+        const userAgent = getUserAgent(req);
+        const ip = requestIp.getClientIp(req);
+        const loggedInUser = await accountsServer.loginWithService(
+          'oauth',
+          {
+            ...req.params,
+            ...req.query,
+          },
+          { ip, userAgent }
+        );
+        res.json(loggedInUser);
       } catch (err) {
         sendError(res, err);
       }

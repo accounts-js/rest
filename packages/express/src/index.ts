@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { get, isEmpty, pick } from 'lodash';
 import { AccountsError } from '@accounts/common';
 import { AccountsServer } from '@accounts/server';
-import requestIp from 'request-ip';
+import * as requestIp from 'request-ip';
 
 export const getUserAgent = req => {
   let userAgent = req.headers['user-agent'] || '';
@@ -107,16 +107,32 @@ const accountsExpress = (
     }
   });
 
+  router.post(`${path}/:service/authenticate`, async (req, res) => {
+    try {
+      const serviceName = req.params.service;
+      const userAgent = getUserAgent(req);
+      const ip = requestIp.getClientIp(req);
+      const loggedInUser = await accountsServer.loginWithService(
+        serviceName,
+        req.body,
+        { ip, userAgent }
+      );
+      res.json(loggedInUser);
+    } catch (err) {
+      sendError(res, err);
+    }
+  });
+
   const services = accountsServer.getServices();
 
   // @accounts/password
   if (services.password) {
     router.post(`${path}/password/register`, async (req, res) => {
       try {
-        const loggedInUser = await services.password.createUser(
-          pick(req.body.user, ['username', 'password', 'email', 'profile'])
+        const userId = await services.password.createUser(
+          pick(req.body, ['username', 'password', 'email', 'profile'])
         );
-        res.json(loggedInUser);
+        res.json({ userId });
       } catch (err) {
         sendError(res, err);
       }

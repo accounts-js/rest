@@ -53,7 +53,7 @@ const accountsExpress = (
     next();
   });
 
-  router.post(`${path}impersonate`, async (req, res) => {
+  router.post(`${path}/impersonate`, async (req, res) => {
     try {
       const { username, accessToken } = req.body;
       const userAgent = getUserAgent(req);
@@ -70,7 +70,7 @@ const accountsExpress = (
     }
   });
 
-  router.post(`${path}user`, async (req, res) => {
+  router.post(`${path}/user`, async (req, res) => {
     try {
       const { accessToken } = req.body;
       const user = await accountsServer.resumeSession(accessToken);
@@ -80,7 +80,7 @@ const accountsExpress = (
     }
   });
 
-  router.post(`${path}refreshTokens`, async (req, res) => {
+  router.post(`${path}/refreshTokens`, async (req, res) => {
     try {
       const { accessToken, refreshToken } = req.body;
       const userAgent = getUserAgent(req);
@@ -97,7 +97,7 @@ const accountsExpress = (
     }
   });
 
-  router.post(`${path}logout`, async (req, res) => {
+  router.post(`${path}/logout`, async (req, res) => {
     try {
       const { accessToken } = req.body;
       await accountsServer.logout(accessToken);
@@ -122,7 +122,7 @@ const accountsExpress = (
       }
     });
 
-    router.post(`${path}verifyEmail`, async (req, res) => {
+    router.post(`${path}/verifyEmail`, async (req, res) => {
       try {
         const { token } = req.body;
         await services.password.verifyEmail(token);
@@ -132,7 +132,7 @@ const accountsExpress = (
       }
     });
 
-    router.post(`${path}resetPassword`, async (req, res) => {
+    router.post(`${path}/resetPassword`, async (req, res) => {
       try {
         const loggedInUser = await services.password.createUser(
           pick(req.body.user, ['username', 'password', 'email', 'profile'])
@@ -143,7 +143,7 @@ const accountsExpress = (
       }
     });
 
-    router.post(`${path}sendVerificationEmail`, async (req, res) => {
+    router.post(`${path}/sendVerificationEmail`, async (req, res) => {
       try {
         const { email } = req.body;
         await services.password.sendVerificationEmail(email);
@@ -153,7 +153,7 @@ const accountsExpress = (
       }
     });
 
-    router.post(`${path}sendResetPasswordEmail`, async (req, res) => {
+    router.post(`${path}/sendResetPasswordEmail`, async (req, res) => {
       try {
         const { email } = req.body;
         await services.password.sendResetPasswordEmail(email);

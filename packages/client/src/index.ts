@@ -3,7 +3,7 @@ import { TransportInterface, AccountsClient } from '@accounts/client';
 import {
   AccountsError,
   CreateUserType,
-  PasswordLoginUserType,
+  // PasswordLoginUserType,
   LoginReturnType,
   UserObjectType,
   ImpersonateReturnType,
@@ -44,14 +44,14 @@ export default class Client implements TransportInterface {
         const { message, loginInfo, errorCode } = await res.json();
         throw new AccountsError(message, loginInfo, errorCode);
       }
-      return await res.json();
+      return res.json();
     } else {
       throw new Error('Server did not return a response');
     }
   }
 
   public loginWithPassword(
-    user: PasswordLoginUserType,
+    user: any,
     password: string,
     customHeaders?: object
   ): Promise<LoginReturnType> {
@@ -80,17 +80,6 @@ export default class Client implements TransportInterface {
     return this.fetch('impersonate', args, customHeaders);
   }
 
-  public async createUser(
-    user: CreateUserType,
-    customHeaders?: object
-  ): Promise<string> {
-    const args = {
-      method: 'POST',
-      body: JSON.stringify({ user }),
-    };
-    return this.fetch('createUser', args, customHeaders);
-  }
-
   public refreshTokens(
     accessToken: string,
     refreshToken: string,
@@ -116,16 +105,6 @@ export default class Client implements TransportInterface {
     return this.fetch('logout', args, customHeaders);
   }
 
-  public verifyEmail(token: string, customHeaders?: object): Promise<void> {
-    const args = {
-      method: 'POST',
-      body: JSON.stringify({
-        token,
-      }),
-    };
-    return this.fetch('verifyEmail', args, customHeaders);
-  }
-
   public async getUser(
     accessToken: string,
     customHeaders?: object
@@ -136,7 +115,18 @@ export default class Client implements TransportInterface {
         accessToken,
       }),
     };
-    return this.fetch('getUser', args, customHeaders);
+    return this.fetch('user', args, customHeaders);
+  }
+
+  public async createUser(
+    user: CreateUserType,
+    customHeaders?: object
+  ): Promise<string> {
+    const args = {
+      method: 'POST',
+      body: JSON.stringify({ user }),
+    };
+    return this.fetch('password/register', args, customHeaders);
   }
 
   public resetPassword(
@@ -151,7 +141,17 @@ export default class Client implements TransportInterface {
         newPassword,
       }),
     };
-    return this.fetch('resetPassword', args, customHeaders);
+    return this.fetch('password/resetPassword', args, customHeaders);
+  }
+
+  public verifyEmail(token: string, customHeaders?: object): Promise<void> {
+    const args = {
+      method: 'POST',
+      body: JSON.stringify({
+        token,
+      }),
+    };
+    return this.fetch('password/verifyEmail', args, customHeaders);
   }
 
   public sendVerificationEmail(
@@ -164,7 +164,7 @@ export default class Client implements TransportInterface {
         email,
       }),
     };
-    return this.fetch('sendVerificationEmail', args, customHeaders);
+    return this.fetch('password/sendVerificationEmail', args, customHeaders);
   }
 
   public sendResetPasswordEmail(
@@ -177,7 +177,7 @@ export default class Client implements TransportInterface {
         email,
       }),
     };
-    return this.fetch('sendResetPasswordEmail', args, customHeaders);
+    return this.fetch('password/sendResetPasswordEmail', args, customHeaders);
   }
 
   private _loadHeadersObject(plainHeaders: object): object {

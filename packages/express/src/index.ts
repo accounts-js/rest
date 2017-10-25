@@ -134,10 +134,9 @@ const accountsExpress = (
 
     router.post(`${path}/password/resetPassword`, async (req, res) => {
       try {
-        const loggedInUser = await services.password.createUser(
-          pick(req.body.user, ['username', 'password', 'email', 'profile'])
-        );
-        res.json(loggedInUser);
+        const { token, newPassword } = req.body;
+        await services.password.resetPassword(token, newPassword);
+        res.json({ message: 'Password changed' });
       } catch (err) {
         sendError(res, err);
       }

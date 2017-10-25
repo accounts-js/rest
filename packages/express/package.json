@@ -40,13 +40,13 @@
   "author": "Tim Mikeladze",
   "license": "MIT",
   "devDependencies": {
-    "@accounts/common": "^0.1.0",
-    "@accounts/server": "^0.1.0",
+    "@accounts/common": "canary",
+    "@accounts/server": "canary",
     "coveralls": "^3.0.0"
   },
   "peerDependencies": {
-    "@accounts/common": "^0.1.0",
-    "@accounts/server": "^0.1.0"
+    "@accounts/common": "canary",
+    "@accounts/server": "canary"
   },
   "dependencies": {
     "express": "^4.16.2",

@@ -22,17 +22,18 @@ export const sendError = (res, err) =>
   });
 
 export interface AccountsExpressOptions {
-  path: string;
+  path?: string;
 }
 
-const defaultOptions = {
+const defaultOptions: AccountsExpressOptions = {
   path: '/accounts',
 };
 
 const accountsExpress = (
   accountsServer: AccountsServer,
-  options: AccountsExpressOptions
+  options: AccountsExpressOptions = {}
 ): Router => {
+  options = { ...defaultOptions, ...options };
   const { path } = options;
   const router = express.Router();
 

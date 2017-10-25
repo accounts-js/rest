@@ -111,7 +111,7 @@ const accountsExpress = (
 
   // @accounts/password
   if (services.password) {
-    router.post(`${path}/register/password`, async (req, res) => {
+    router.post(`${path}/password/register`, async (req, res) => {
       try {
         const loggedInUser = await services.password.createUser(
           pick(req.body.user, ['username', 'password', 'email', 'profile'])
@@ -122,7 +122,7 @@ const accountsExpress = (
       }
     });
 
-    router.post(`${path}/verifyEmail`, async (req, res) => {
+    router.post(`${path}/password/verifyEmail`, async (req, res) => {
       try {
         const { token } = req.body;
         await services.password.verifyEmail(token);
@@ -132,7 +132,7 @@ const accountsExpress = (
       }
     });
 
-    router.post(`${path}/resetPassword`, async (req, res) => {
+    router.post(`${path}/password/resetPassword`, async (req, res) => {
       try {
         const loggedInUser = await services.password.createUser(
           pick(req.body.user, ['username', 'password', 'email', 'profile'])
@@ -143,7 +143,7 @@ const accountsExpress = (
       }
     });
 
-    router.post(`${path}/sendVerificationEmail`, async (req, res) => {
+    router.post(`${path}/password/sendVerificationEmail`, async (req, res) => {
       try {
         const { email } = req.body;
         await services.password.sendVerificationEmail(email);
@@ -153,7 +153,7 @@ const accountsExpress = (
       }
     });
 
-    router.post(`${path}/sendResetPasswordEmail`, async (req, res) => {
+    router.post(`${path}/password/sendResetPasswordEmail`, async (req, res) => {
       try {
         const { email } = req.body;
         await services.password.sendResetPasswordEmail(email);

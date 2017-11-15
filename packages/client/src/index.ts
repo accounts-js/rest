@@ -62,7 +62,7 @@ export default class Client implements TransportInterface {
         password,
       }),
     };
-    return this.fetch('loginWithPassword', args, customHeaders);
+    return this.fetch('password/authenticate', args, customHeaders);
   }
 
   public impersonate(

@@ -1,5 +1,10 @@
 import { serviceAuthenticate } from '../../src/endpoints/service-authenticate';
 
+const res = {
+  json: jest.fn(),
+  status: jest.fn(() => res),
+};
+
 describe('serviceAuthenticate', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -21,10 +26,7 @@ describe('serviceAuthenticate', () => {
       headers: {},
     };
     const reqCopy = { ...req };
-    const res = {
-      json: jest.fn(),
-      status: jest.fn(() => res),
-    };
+
     await middleware(req, res);
 
     expect(req).toEqual(reqCopy);
@@ -51,10 +53,7 @@ describe('serviceAuthenticate', () => {
       headers: {},
     };
     const reqCopy = { ...req };
-    const res = {
-      json: jest.fn(),
-      status: jest.fn(() => res),
-    };
+
     await middleware(req, res);
 
     expect(req).toEqual(reqCopy);

@@ -109,12 +109,13 @@ describe('userLoader', () => {
         'accounts-access-token': 'token',
       },
     };
+    const reqCopy = {...req};
     const res = {};
     const next = jest.fn();
     await provider(req, res, next);
     
     expect(accountsServer.resumeSession).toHaveBeenCalledWith('token');
-    expect(req).toEqual({...req, user, userId: user.id});
+    expect(req).toEqual({...reqCopy, user, userId: user.id});
     expect(res).toEqual({});
     expect(next).toHaveBeenCalledTimes(1);
   });
@@ -126,12 +127,13 @@ describe('userLoader', () => {
         accessToken: 'token',
       },
     };
+    const reqCopy = {...req};
     const res = {};
     const next = jest.fn();
     await provider(req, res, next);
     
     expect(accountsServer.resumeSession).toHaveBeenCalledWith('token');
-    expect(req).toEqual({...req, user, userId: user.id});
+    expect(req).toEqual({...reqCopy, user, userId: user.id});
     expect(res).toEqual({});
     expect(next).toHaveBeenCalledTimes(1);
   });

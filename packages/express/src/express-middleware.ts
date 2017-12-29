@@ -8,7 +8,6 @@ import {
   sendVerificationEmail,
 } from './endpoints/password/verify-email';
 import * as express from 'express';
-import { Router } from 'express';
 import { get, isEmpty, pick } from 'lodash';
 import * as requestIp from 'request-ip';
 import { AccountsError } from '@accounts/common';
@@ -34,7 +33,7 @@ export const userLoader = (accountsServer: AccountsServer) => async (
   next
 ) => {
   const accessToken =
-    get(req.headers, 'accounts-access-token', undefined) ||
+    get(req.headers, 'accounts-access-token') ||
     get(req.body, 'accessToken', undefined);
   if (!isEmpty(accessToken)) {
     try {
@@ -51,7 +50,7 @@ export const userLoader = (accountsServer: AccountsServer) => async (
 const accountsExpress = (
   accountsServer: AccountsServer,
   options: AccountsExpressOptions = {}
-): Router => {
+): express.Router => {
   options = { ...defaultOptions, ...options };
   const { path } = options;
   const router = express.Router();

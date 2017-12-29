@@ -1,1 +1,2 @@
-export * from './express-middleware';
+import middleware from './express-middleware';
+export default middleware;

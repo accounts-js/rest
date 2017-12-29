@@ -32,7 +32,7 @@ describe('logout endpoint', () => {
   });
 
   it('Sends error if it was thrown on logout', async () => {
-    const error = { message: 'Could not login' };
+    const error = { message: 'Could not logout' };
     const accountsServer = {
       logout: jest.fn(() => {
         throw error;

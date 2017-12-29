@@ -10,7 +10,7 @@ describe('logout endpoint', () => {
     jest.clearAllMocks();
   });
 
-  it('calls loginWithService and returns the user in json format', async () => {
+  it('calls logout and returns a message if when logged out successfuly', async () => {
     const accountsServer = {
       logout: jest.fn(),
     };
@@ -18,7 +18,7 @@ describe('logout endpoint', () => {
 
     const req = {
       body: {
-        accessToken: 'token'
+        accessToken: 'token',
       },
     };
     const reqCopy = { ...req };
@@ -27,11 +27,11 @@ describe('logout endpoint', () => {
 
     expect(req).toEqual(reqCopy);
     expect(accountsServer.logout).toBeCalledWith('token');
-    expect(res.json).toBeCalledWith({message: 'Logged out'});
+    expect(res.json).toBeCalledWith({ message: 'Logged out' });
     expect(res.status).not.toBeCalled();
   });
 
-  it('Sends error if it was thrown on loginWithService', async () => {
+  it('Sends error if it was thrown on logout', async () => {
     const error = { message: 'Could not login' };
     const accountsServer = {
       logout: jest.fn(() => {
@@ -42,7 +42,7 @@ describe('logout endpoint', () => {
     const req = {
       body: {
         accessToken: 'token',
-      }
+      },
     };
     const reqCopy = { ...req };
 

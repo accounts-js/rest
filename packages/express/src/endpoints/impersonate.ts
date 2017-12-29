@@ -1,4 +1,4 @@
-import { requestIp } from 'request-ip';
+import * as requestIp from 'request-ip';
 import { AccountsServer } from '@accounts/server';
 import { getUserAgent } from '../utils/get-user-agent';
 import { sendError } from '../utils/send-error';

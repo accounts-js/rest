@@ -1,55 +1,60 @@
-import { logout } from '../../src/endpoints/logout';
+import { getUser } from '../../src/endpoints/get-user';
 
 const res = {
   json: jest.fn(),
   status: jest.fn(() => res),
 };
 
-describe('logout', () => {
+describe('getUser', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('calls logout and returns a message if when logged out successfuly', async () => {
-    const accountsServer = {
-      logout: jest.fn(),
+  it('calls getUser and returns the user json response', async () => {
+    const user = {
+      id: '1',
     };
-    const middleware = logout(accountsServer as any);
+    const accountsServer = {
+      resumeSession: jest.fn(() => user),
+    };
+    const middleware = getUser(accountsServer as any);
 
     const req = {
       body: {
         accessToken: 'token',
       },
+      headers: {},
     };
     const reqCopy = { ...req };
 
     await middleware(req, res);
 
     expect(req).toEqual(reqCopy);
-    expect(accountsServer.logout).toBeCalledWith('token');
-    expect(res.json).toBeCalledWith({ message: 'Logged out' });
+    expect(accountsServer.resumeSession).toBeCalledWith('token');
+    expect(res.json).toBeCalledWith(user);
     expect(res.status).not.toBeCalled();
   });
 
-  it('Sends error if it was thrown on logout', async () => {
-    const error = { message: 'Could not logout' };
+  it('Sends error if it was thrown on getUser', async () => {
+    const error = { message: 'Could not get user' };
     const accountsServer = {
-      logout: jest.fn(() => {
+      resumeSession: jest.fn(() => {
         throw error;
       }),
     };
-    const middleware = logout(accountsServer as any);
+    const middleware = getUser(accountsServer as any);
     const req = {
       body: {
         accessToken: 'token',
       },
+      headers: {},
     };
     const reqCopy = { ...req };
 
     await middleware(req, res);
 
     expect(req).toEqual(reqCopy);
-    expect(accountsServer.logout).toBeCalledWith('token');
+    expect(accountsServer.resumeSession).toBeCalledWith('token');
     expect(res.status).toBeCalledWith(400);
     expect(res.json).toBeCalledWith(error);
   });

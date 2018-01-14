@@ -5,7 +5,7 @@ const res = {
   status: jest.fn(() => res),
 };
 
-describe('serviceAuthenticate', () => {
+describe('impersonate', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

@@ -18,7 +18,7 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-export default class RestClient implements TransportInterface {
+export class RestClient implements TransportInterface {
   private options: OptionsType;
 
   constructor(options: OptionsType) {
@@ -194,32 +194,4 @@ export default class RestClient implements TransportInterface {
   }
 }
 
-const authFetch = async (
-  accounts: AccountsClient,
-  path: string,
-  request: object
-) => {
-  await accounts.refreshSession();
-  const { accessToken } = await accounts.tokens();
-  const headersCopy = { ...headers };
-
-  if (accessToken) {
-    headersCopy['accounts-access-token'] = accessToken;
-  }
-
-  /* tslint:disable no-string-literal */
-  if (request['headers']) {
-    forIn(request['headers'], (v: string, k: string) => {
-      headersCopy[v] = k;
-    });
-  }
-  /* tslint:enable no-string-literal */
-
-  const fetchOptions = {
-    ...request,
-    headers: headersCopy,
-  };
-  return fetch(path, fetchOptions);
-};
-
-export { authFetch, RestClient };
+export default RestClient;

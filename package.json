@@ -17,6 +17,7 @@
     "prettier-test":
       "prettier --list-different \"packages/*/{src,__tests__}/**/*.ts\"",
     "coverage": "lerna run coverage",
+    "codecov": "codecov",
     "precommit": "pretty-quick --staged"
   },
   "prettier": {

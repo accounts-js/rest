@@ -8,4 +8,4 @@ jobs:
       - checkout
       - run: yarn install --frozen-lockfile
       - run: yarn test
-      - run: codecov
+      - run: yarn codecov

@@ -2,7 +2,7 @@
 
 REST client and server for accounts.
 
-[![CircleCI](https://circleci.com/gh/accounts-js/rest.svg?style=svg)](https://circleci.com/gh/accounts-js/rest)
+[![CircleCI](https://circleci.com/gh/accounts-js/rest.svg?style=shield)](https://circleci.com/gh/accounts-js/rest)
 [![codecov](https://codecov.io/gh/accounts-js/rest/branch/master/graph/badge.svg)](https://codecov.io/gh/accounts-js/rest)
 ![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
 

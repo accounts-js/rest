@@ -3,7 +3,10 @@ import { AccountsServer } from '@accounts/server';
 import { getUserAgent } from '../utils/get-user-agent';
 import { sendError } from '../utils/send-error';
 
-export const impersonate = (accountsServer: AccountsServer) => async (req, res) => {
+export const impersonate = (accountsServer: AccountsServer) => async (
+  req,
+  res
+) => {
   try {
     const { username, accessToken } = req.body;
     const userAgent = getUserAgent(req);
@@ -18,4 +21,4 @@ export const impersonate = (accountsServer: AccountsServer) => async (req, res) 
   } catch (err) {
     sendError(res, err);
   }
-}
+};

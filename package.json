@@ -10,15 +10,13 @@
     "lint": "tslint packages/*/src/**/*",
     "prebootstrap": "npm install",
     "postinstall": "lerna bootstrap",
-    "test": "npm run testonly && yarn prettier-test",
+    "test": "npm run coverage && yarn prettier-test",
     "posttest": "npm run lint",
     "testonly": "lerna run testonly",
     "prettier": "prettier --write \"packages/*/{src,__tests__}/**/*.ts\"",
     "prettier-test":
       "prettier --list-different \"packages/*/{src,__tests__}/**/*.ts\"",
     "coverage": "lerna run coverage",
-    "coveralls":
-      "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "precommit": "pretty-quick --staged"
   },
   "prettier": {
@@ -34,6 +32,7 @@
     "@accounts/tslint-config-accounts": "^0.0.5",
     "@types/jest": "^20.0.6",
     "@types/node": "^8.0.19",
+    "codecov": "^3.0.0",
     "husky": "^0.14.3",
     "jest": "^21.2.1",
     "lerna": "^2.5.1",

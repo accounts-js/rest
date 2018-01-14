@@ -43,6 +43,44 @@ describe('RestClient', () => {
             'localhost:3000'
           )
         ));
+
+    it('should throw error', async () => {
+      window.fetch = jest.fn().mockImplementation(() => ({
+        status: 400,
+        json: jest.fn().mockImplementation(() => ({ test: 'test' })),
+      }));
+
+      try {
+        await client.fetch('route', {}, { origin: 'localhost:3000' });
+        throw new Error();
+      } catch (err) {
+        expect(window.fetch.mock.calls[0][1].headers.origin).toBe(
+          'localhost:3000'
+        );
+      }
+      window.fetch = jest.fn().mockImplementation(() => ({
+        status: 200,
+        json: jest.fn().mockImplementation(() => ({ test: 'test' })),
+      }));
+    });
+
+    it('should throw if server did not return a response', async () => {
+      window.fetch = jest.fn().mockImplementation(() => null);
+
+      try {
+        await client.fetch('route', {}, { origin: 'localhost:3000' });
+        throw new Error();
+      } catch (err) {
+        expect(window.fetch.mock.calls[0][1].headers.origin).toBe(
+          'localhost:3000'
+        );
+        expect(err.message).toBe('Server did not return a response');
+      }
+      window.fetch = jest.fn().mockImplementation(() => ({
+        status: 200,
+        json: jest.fn().mockImplementation(() => ({ test: 'test' })),
+      }));
+    });
   });
 
   describe('loginWithPassword', () => {

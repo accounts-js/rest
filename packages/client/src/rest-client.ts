@@ -222,4 +222,4 @@ const authFetch = async (
   return fetch(path, fetchOptions);
 };
 
-export { authFetch };
+export { authFetch, RestClient };

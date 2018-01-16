@@ -83,20 +83,26 @@ describe('RestClient', () => {
     });
   });
 
-  describe('loginWithPassword', () => {
+  describe('loginWithService', () => {
     const client = new RestClient({
       apiHost: 'http://localhost:3000',
       rootPath: '/accounts',
     });
 
-    it('should call fetch with authenticate path', () =>
-      client
-        .loginWithPassword('user', 'password')
-        .then(() =>
-          expect(window.fetch.mock.calls[0][0]).toBe(
-            'http://localhost:3000/accounts/password/authenticate'
-          )
-        ));
+    it('should call fetch with authenticate path', async () => {
+      await client.loginWithService('password', {
+        user: {
+          username: 'toto',
+        },
+        password: 'password',
+      });
+      expect(window.fetch.mock.calls[0][0]).toBe(
+        'http://localhost:3000/accounts/password/authenticate'
+      );
+      expect(window.fetch.mock.calls[0][1].body).toBe(
+        '{"user":{"username":"toto"},"password":"password"}'
+      );
+    });
   });
 
   describe('impersonate', () => {

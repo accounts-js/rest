@@ -50,19 +50,18 @@ export class RestClient implements TransportInterface {
     }
   }
 
-  public loginWithPassword(
-    user: any,
-    password: string,
+  public loginWithService(
+    provider: string,
+    data: any,
     customHeaders?: object
   ): Promise<LoginReturnType> {
     const args = {
       method: 'POST',
       body: JSON.stringify({
-        user,
-        password,
+        ...data,
       }),
     };
-    return this.fetch('password/authenticate', args, customHeaders);
+    return this.fetch(`${provider}/authenticate`, args, customHeaders);
   }
 
   public impersonate(

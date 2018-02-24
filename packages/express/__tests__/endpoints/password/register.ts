@@ -24,7 +24,9 @@ describe('registerPassword', () => {
 
     const req = {
       body: {
-        username: 'toto',
+        user: {
+          username: 'toto',
+        },
         extraFieldThatShouldNotBePassed: 'hey',
       },
       headers: {},
@@ -56,7 +58,9 @@ describe('registerPassword', () => {
     const middleware = registerPassword(accountsServer as any);
     const req = {
       body: {
-        username: 'toto',
+        user: {
+          username: 'toto',
+        },
         extraFieldThatShouldNotBePassed: 'hey',
       },
       headers: {},

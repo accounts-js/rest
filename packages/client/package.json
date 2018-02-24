@@ -2,18 +2,21 @@
   "name": "@accounts/rest-client",
   "version": "0.1.0",
   "description": "REST client for accounts",
-  "main": "lib/index.js",
+  "main": "lib/index",
+  "typings": "lib/index",
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "start": "tsc --watch",
+    "precompile": "rimraf ./lib",
     "compile": "tsc",
     "prepublish": "npm run compile",
     "test": "npm run testonly",
     "testonly": "jest",
     "coverage": "npm run testonly -- --coverage",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coveralls":
+      "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "jest": {
     "testEnvironment": "jsdom",
@@ -21,15 +24,13 @@
       ".(ts|tsx)": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$",
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
+    "moduleFileExtensions": ["ts", "js"],
     "mapCoverage": true
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/js-accounts/rest/tree/master/packages/rest-client"
+    "url":
+      "https://github.com/js-accounts/rest/tree/master/packages/rest-client"
   },
   "keywords": [
     "rest",

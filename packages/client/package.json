@@ -45,8 +45,8 @@
   "author": "Tim Mikeladze",
   "license": "MIT",
   "devDependencies": {
-    "@accounts/client": "^0.1.0-alpha.29d07868",
-    "@accounts/common": "^0.1.0-alpha.42868044",
+    "@accounts/client": "0.1.0-alpha.29d07868",
+    "@accounts/common": "0.1.0-alpha.42868044",
     "@types/lodash": "^4.14.104",
     "coveralls": "^2.11.14",
     "node-fetch": "^1.7.3"

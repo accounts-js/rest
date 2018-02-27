@@ -2,11 +2,11 @@
 # yarn lockfile v1
 
 
-"@accounts/client@^0.1.0-alpha.29d07868":
-  version "0.1.0-alpha.fe08f703"
-  resolved "https://registry.yarnpkg.com/@accounts/client/-/client-0.1.0-alpha.fe08f703.tgz#0dfb459366cfb96f55d34e185a61358bb5bbcbd5"
+"@accounts/client@0.1.0-alpha.29d07868":
+  version "0.1.0-alpha.29d07868"
+  resolved "https://registry.yarnpkg.com/@accounts/client/-/client-0.1.0-alpha.29d07868.tgz#e6a62fd4e36bfc80b71e1f6acb11e6cf9d9950d3"
   dependencies:
-    "@accounts/common" "^0.1.0-alpha.fe08f703"
+    "@accounts/common" "^0.1.0"
     crypto-js "^3.1.9-1"
     immutable "^3.8.1"
     jwt-decode "^2.1.0"
@@ -14,9 +14,9 @@
     redux "^3.6.0"
     redux-immutable "^3.0.8"
 
-"@accounts/common@^0.1.0-alpha.42868044", "@accounts/common@^0.1.0-alpha.fe08f703":
-  version "0.1.0-alpha.fe08f703"
-  resolved "https://registry.yarnpkg.com/@accounts/common/-/common-0.1.0-alpha.fe08f703.tgz#88970102ce9d9f18b464b3dfb8c6417087d4639c"
+"@accounts/common@0.1.0-alpha.42868044":
+  version "0.1.0-alpha.42868044"
+  resolved "https://registry.yarnpkg.com/@accounts/common/-/common-0.1.0-alpha.42868044.tgz#b9f802c6f3230bc28bb458e8470c8f5b0cabcc52"
   dependencies:
     lodash "^4.16.4"
 

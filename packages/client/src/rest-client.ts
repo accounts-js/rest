@@ -179,7 +179,7 @@ export class RestClient implements TransportInterface {
     return this.fetch('password/sendResetPasswordEmail', args, customHeaders);
   }
 
-  private _loadHeadersObject(plainHeaders: object): object {
+  private _loadHeadersObject(plainHeaders: object): { [key: string]: string } {
     if (isPlainObject(plainHeaders)) {
       const customHeaders = headers;
       forIn(plainHeaders, (v: string, k: string) => {

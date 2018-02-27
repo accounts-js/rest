@@ -3,7 +3,6 @@ import { TransportInterface, AccountsClient } from '@accounts/client';
 import {
   AccountsError,
   CreateUserType,
-  // PasswordLoginUserType,
   LoginReturnType,
   UserObjectType,
   ImpersonateReturnType,
@@ -14,7 +13,7 @@ export interface OptionsType {
   rootPath: string;
 }
 
-const headers = {
+const headers: { [key: string]: string } = {
   'Content-Type': 'application/json',
 };
 
@@ -28,7 +27,7 @@ export class RestClient implements TransportInterface {
   public async fetch(
     route: string,
     args: object,
-    customHeaders?: object
+    customHeaders: object = {}
   ): Promise<any> {
     const fetchOptions = {
       headers: this._loadHeadersObject(customHeaders),

@@ -45,14 +45,15 @@
   "author": "Tim Mikeladze",
   "license": "MIT",
   "devDependencies": {
-    "@accounts/client": "0.0.11",
-    "@accounts/common": "canary",
+    "@accounts/client": "^0.1.0-alpha.29d07868",
+    "@accounts/common": "^0.1.0-alpha.42868044",
+    "@types/lodash": "^4.14.104",
     "coveralls": "^2.11.14",
     "node-fetch": "^1.7.3"
   },
   "peerDependencies": {
-    "@accounts/client": "^0.0.15",
-    "@accounts/common": "canary"
+    "@accounts/client": "^0.1.0",
+    "@accounts/common": "^0.1.0"
   },
   "dependencies": {
     "lodash": "^4.17.4"

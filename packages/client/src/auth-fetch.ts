@@ -1,14 +1,14 @@
 import { forIn } from 'lodash';
 import { AccountsClient } from '@accounts/client';
 
-const headers = {
+const headers: { [key: string]: string } = {
   'Content-Type': 'application/json',
 };
 
 export const authFetch = async (
   accounts: AccountsClient,
   path: string,
-  request: object
+  request: any
 ) => {
   await accounts.refreshSession();
   const { accessToken } = await accounts.tokens();

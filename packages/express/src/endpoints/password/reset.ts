@@ -1,9 +1,10 @@
+import * as express from 'express';
 import { AccountsServer } from '@accounts/server';
 import { sendError } from '../../utils/send-error';
 
 export const resetPassword = (accountsServer: AccountsServer) => async (
-  req,
-  res
+  req: express.Request,
+  res: express.Response
 ) => {
   try {
     const { token, newPassword } = req.body;
@@ -18,7 +19,7 @@ export const resetPassword = (accountsServer: AccountsServer) => async (
 
 export const sendResetPasswordEmail = (
   accountsServer: AccountsServer
-) => async (req, res) => {
+) => async (req: express.Request, res: express.Response) => {
   try {
     const { email } = req.body;
     await accountsServer.getServices().password.sendResetPasswordEmail(email);

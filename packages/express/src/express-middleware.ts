@@ -28,9 +28,9 @@ const defaultOptions: AccountsExpressOptions = {
 };
 
 export const userLoader = (accountsServer: AccountsServer) => async (
-  req,
-  res,
-  next
+  req: express.Request,
+  res: express.Response,
+  next: any
 ) => {
   const accessToken =
     get(req.headers, 'accounts-access-token') ||
@@ -38,8 +38,8 @@ export const userLoader = (accountsServer: AccountsServer) => async (
   if (!isEmpty(accessToken)) {
     try {
       const user = await accountsServer.resumeSession(accessToken);
-      req.user = user;
-      req.userId = user.id;
+      (req as any).user = user;
+      (req as any).userId = user.id;
     } catch (e) {
       // Do nothing
     }

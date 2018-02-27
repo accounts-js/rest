@@ -1,9 +1,10 @@
+import * as express from 'express';
 import { AccountsServer } from '@accounts/server';
 import { sendError } from '../../utils/send-error';
 
 export const verifyEmail = (accountsServer: AccountsServer) => async (
-  req,
-  res
+  req: express.Request,
+  res: express.Response
 ) => {
   try {
     const { token } = req.body;
@@ -15,8 +16,8 @@ export const verifyEmail = (accountsServer: AccountsServer) => async (
 };
 
 export const sendVerificationEmail = (accountsServer: AccountsServer) => async (
-  req,
-  res
+  req: express.Request,
+  res: express.Response
 ) => {
   try {
     const { email } = req.body;

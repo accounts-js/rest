@@ -1,2 +1,4 @@
-import middleware from './express-middleware';
+import middleware, { userLoader } from './express-middleware';
+
+export { userLoader };
 export default middleware;

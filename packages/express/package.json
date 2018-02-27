@@ -38,6 +38,9 @@
   "devDependencies": {
     "@accounts/common": "canary",
     "@accounts/server": "canary",
+    "@types/express": "^4.11.1",
+    "@types/lodash": "^4.14.104",
+    "@types/request-ip": "^0.0.33",
     "coveralls": "^3.0.0"
   },
   "peerDependencies": {

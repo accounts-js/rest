@@ -1,9 +1,10 @@
+import * as express from 'express';
 import { AccountsServer } from '@accounts/server';
 import { sendError } from '../../utils/send-error';
 
 export const registerPassword = (accountsServer: AccountsServer) => async (
-  req,
-  res
+  req: express.Request,
+  res: express.Response
 ) => {
   try {
     const userId = await accountsServer

@@ -38,7 +38,7 @@
   "license": "MIT",
   "devDependencies": {
     "@accounts/tslint-config-accounts": "0.0.5",
-    "@types/jest": "20.0.6",
+    "@types/jest": "20.0.8",
     "codecov": "3.0.0",
     "husky": "0.14.3",
     "jest": "21.2.1",

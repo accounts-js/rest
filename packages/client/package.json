@@ -45,14 +45,14 @@
   "author": "Tim Mikeladze",
   "license": "MIT",
   "devDependencies": {
-    "@accounts/client": "0.1.0-alpha.29d07868",
-    "@accounts/common": "0.1.0-alpha.42868044",
+    "@accounts/client": "^0.1.0-beta.0",
+    "@accounts/common": "^0.1.0-beta.0",
     "@types/lodash": "^4.14.104",
     "node-fetch": "^1.7.3"
   },
   "peerDependencies": {
-    "@accounts/client": "^0.1.0",
-    "@accounts/common": "^0.1.0"
+    "@accounts/client": "^0.1.0-beta.0",
+    "@accounts/common": "^0.1.0-beta.0"
   },
   "dependencies": {
     "lodash": "^4.17.4"

@@ -25,7 +25,11 @@
     "trailingComma": "es5"
   },
   "renovate": {
-    "extends": ["config:base"]
+    "extends": ["config:base"],
+    "automerge": true,
+    "major": {
+      "automerge": false
+    }
   },
   "repository": {
     "type": "git",

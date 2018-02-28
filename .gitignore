@@ -4,3 +4,4 @@ coverage/
 npm-debug.log
 .idea
 lerna-debug.log
+packages/*/package-lock.json

@@ -1,3 +1,4 @@
-import accountsExpress from './accountsExpress';
+import middleware, { userLoader } from './express-middleware';
 
-export default accountsExpress;
+export { userLoader };
+export default middleware;

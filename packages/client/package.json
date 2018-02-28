@@ -46,10 +46,10 @@
   "author": "Tim Mikeladze",
   "license": "MIT",
   "devDependencies": {
-    "@accounts/client": "^0.1.0-beta.0",
-    "@accounts/common": "^0.1.0-beta.0",
-    "@types/lodash": "^4.14.104",
-    "node-fetch": "^1.7.3"
+    "@accounts/client": "0.1.0-beta.0",
+    "@accounts/common": "0.1.0-beta.0",
+    "@types/lodash": "4.14.104",
+    "node-fetch": "1.7.3"
   },
   "peerDependencies": {
     "@accounts/client": "^0.1.0-beta.0",

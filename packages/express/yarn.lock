@@ -2,13 +2,13 @@
 # yarn lockfile v1
 
 
-"@accounts/common@^0.1.0-beta.0":
+"@accounts/common@0.1.0-beta.0", "@accounts/common@^0.1.0-beta.0":
   version "0.1.0-beta.0"
   resolved "https://registry.yarnpkg.com/@accounts/common/-/common-0.1.0-beta.0.tgz#04a9496c64bbd5ab22c2f6911cb621ba106421ca"
   dependencies:
     lodash "^4.16.4"
 
-"@accounts/server@^0.1.0-beta.0":
+"@accounts/server@0.1.0-beta.0":
   version "0.1.0-beta.0"
   resolved "https://registry.yarnpkg.com/@accounts/server/-/server-0.1.0-beta.0.tgz#d13e7c76dc7fdfeb9cbc8e622915101db3041ff1"
   dependencies:
@@ -38,7 +38,7 @@
     "@types/events" "*"
     "@types/node" "*"
 
-"@types/express@*", "@types/express@^4.11.1":
+"@types/express@*", "@types/express@4.11.1":
   version "4.11.1"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-4.11.1.tgz#f99663b3ab32d04cb11db612ef5dd7933f75465b"
   dependencies:
@@ -46,7 +46,7 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
-"@types/lodash@^4.14.104":
+"@types/lodash@4.14.104":
   version "4.14.104"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.104.tgz#53ee2357fa2e6e68379341d92eb2ecea4b11bb80"
 
@@ -58,7 +58,7 @@
   version "9.4.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.6.tgz#d8176d864ee48753d053783e4e463aec86b8d82e"
 
-"@types/request-ip@^0.0.33":
+"@types/request-ip@0.0.33":
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/@types/request-ip/-/request-ip-0.0.33.tgz#4c4a16f8b27a4ed906470fdac64168bc4de6c295"
   dependencies:

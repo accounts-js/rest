@@ -7,9 +7,8 @@ export const registerPassword = (accountsServer: AccountsServer) => async (
   res: express.Response
 ) => {
   try {
-    const userId = await accountsServer
-      .getServices()
-      .password.createUser(req.body.user);
+    const password: any = accountsServer.getServices().password;
+    const userId = await password.createUser(req.body.user);
     res.json({ userId });
   } catch (err) {
     sendError(res, err);

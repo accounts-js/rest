@@ -24,25 +24,22 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "renovate": {
-    "extends": ["config:base"]
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/js-accounts/rest"
   },
   "license": "MIT",
   "devDependencies": {
-    "@accounts/tslint-config-accounts": "^0.0.5",
-    "@types/jest": "^20.0.6",
-    "codecov": "^3.0.0",
-    "husky": "^0.14.3",
-    "jest": "^21.2.1",
-    "lerna": "^2.9.0",
-    "prettier": "^1.11.0",
-    "pretty-quick": "^1.4.1",
-    "ts-jest": "^22.0.1",
-    "tslint": "^5.9.1",
-    "typescript": "^2.7.2"
+    "@accounts/tslint-config-accounts": "0.0.5",
+    "@types/jest": "20.0.6",
+    "codecov": "3.0.0",
+    "husky": "0.14.3",
+    "jest": "21.2.1",
+    "lerna": "2.9.0",
+    "prettier": "1.11.0",
+    "pretty-quick": "1.4.1",
+    "ts-jest": "22.0.1",
+    "tslint": "5.9.1",
+    "typescript": "2.7.2"
   }
 }

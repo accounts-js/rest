@@ -16,7 +16,7 @@ npm i -S @accounts/rest-express
 import express from 'express';
 import bodyParser from 'body-parser';
 import { AccountsServer } from '@accounts/server';
-import accountsExpress from '@accounts/rest-express';
+import accountsExpress, { userLoader } from '@accounts/rest-express';
 
 const app = express();
 app.use(bodyParser.json());
@@ -24,4 +24,16 @@ app.use(bodyParser.json());
 const accountsServer = new AccountsServer({ ...options });
 const accountsExpressOptions = { ...options };
 app.use(accountsExpress(accountsServer, accountsExpressOptions));
+
+// To bind all routes
+app.use(userLoader(accountsServer));
+
+// to bind a specific route
+app.get('/protected', userLoader(accountsServer), (req, res) => {
+  if (!req.user) {
+    res.status(401).send();
+    return;
+  }
+  res.send(req.user))
+}
 ```

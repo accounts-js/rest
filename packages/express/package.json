@@ -36,15 +36,15 @@
   "author": "Tim Mikeladze",
   "license": "MIT",
   "devDependencies": {
-    "@accounts/common": "canary",
-    "@accounts/server": "canary",
+    "@accounts/common": "^0.1.0-beta.0",
+    "@accounts/server": "^0.1.0-beta.0",
     "@types/express": "^4.11.1",
     "@types/lodash": "^4.14.104",
     "@types/request-ip": "^0.0.33"
   },
   "peerDependencies": {
-    "@accounts/common": "canary",
-    "@accounts/server": "canary"
+    "@accounts/common": "^0.1.0-beta.0",
+    "@accounts/server": "^0.1.0-beta.0"
   },
   "dependencies": {
     "express": "^4.16.2",

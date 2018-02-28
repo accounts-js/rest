@@ -8,9 +8,8 @@ export const resetPassword = (accountsServer: AccountsServer) => async (
 ) => {
   try {
     const { token, newPassword } = req.body;
-    await accountsServer
-      .getServices()
-      .password.resetPassword(token, newPassword);
+    const password: any = accountsServer.getServices().password;
+    await password.resetPassword(token, newPassword);
     res.json({ message: 'Password changed' });
   } catch (err) {
     sendError(res, err);
@@ -22,7 +21,8 @@ export const sendResetPasswordEmail = (
 ) => async (req: express.Request, res: express.Response) => {
   try {
     const { email } = req.body;
-    await accountsServer.getServices().password.sendResetPasswordEmail(email);
+    const password: any = accountsServer.getServices().password;
+    await password.sendResetPasswordEmail(email);
     res.json({ message: 'Email sent' });
   } catch (err) {
     sendError(res, err);

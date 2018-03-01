@@ -18,6 +18,7 @@ import { impersonate } from './endpoints/impersonate';
 import { logout } from './endpoints/logout';
 import { serviceAuthenticate } from './endpoints/service-authenticate';
 import { registerPassword } from './endpoints/password/register';
+import { userLoader } from './user-loader';
 
 export interface AccountsExpressOptions {
   path?: string;
@@ -27,35 +28,14 @@ const defaultOptions: AccountsExpressOptions = {
   path: '/accounts',
 };
 
-export const userLoader = (accountsServer: AccountsServer) => async (
-  req: express.Request,
-  res: express.Response,
-  next: any
-) => {
-  const accessToken =
-    get(req.headers, 'accounts-access-token') ||
-    get(req.body, 'accessToken', undefined);
-  if (!isEmpty(accessToken)) {
-    try {
-      const user = await accountsServer.resumeSession(accessToken);
-      (req as any).user = user;
-      (req as any).userId = user.id;
-    } catch (e) {
-      // Do nothing
-    }
-  }
-  next();
-};
-
 const accountsExpress = (
   accountsServer: AccountsServer,
   options: AccountsExpressOptions = {}
 ): express.Router => {
   options = { ...defaultOptions, ...options };
   const { path } = options;
-  const router = express.Router();
 
-  router.use(userLoader(accountsServer));
+  const router = express.Router();
 
   router.post(`${path}/impersonate`, impersonate(accountsServer));
 

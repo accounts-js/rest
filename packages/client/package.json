@@ -49,7 +49,7 @@
     "@accounts/client": "0.1.0-beta.0",
     "@accounts/common": "0.1.0-beta.0",
     "@types/lodash": "4.14.104",
-    "node-fetch": "1.7.3"
+    "node-fetch": "2.0.0"
   },
   "peerDependencies": {
     "@accounts/client": "^0.1.0-beta.0",

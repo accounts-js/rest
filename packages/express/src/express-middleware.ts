@@ -19,10 +19,7 @@ import { logout } from './endpoints/logout';
 import { serviceAuthenticate } from './endpoints/service-authenticate';
 import { registerPassword } from './endpoints/password/register';
 import { userLoader } from './user-loader';
-
-export interface AccountsExpressOptions {
-  path?: string;
-}
+import { AccountsExpressOptions } from './types';
 
 const defaultOptions: AccountsExpressOptions = {
   path: '/accounts',
@@ -78,7 +75,7 @@ const accountsExpress = (
   if (services.oauth) {
     router.get(
       `${path}/oauth/:provider/callback`,
-      providerCallback(accountsServer)
+      providerCallback(accountsServer, options)
     );
   }
 
